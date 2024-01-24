@@ -1,57 +1,74 @@
+---
+embed-resources: true
+---
+
 # Lab Setup
 Set your working directory and load any required libraries in this code chunk.
-
 ```{r}
-rent.US <- read.csv("price2.csv")
+rent.US <- read.csv("../data/lab1/price2.csv")
 ```
 
 # Practice Work
 Put any practice code in this code chunk. 
 
 ```{r}
-
-
+class(rent.US)  # type of the variable
+dim(rent.US)  # dimension (shape) of the data frame
+head(rent.US)  # first few lines of the df
+str(rent.US)  # structure of the df (variable type of each attribute)
 ```
 
 # Assignment
-
 ## Exercise 1
-
 ### Question 1.1
-
 Pick any 2 columns one at a time from the rent.US data. Do this using both the $ and the [,] notation.
 ```{r}
-
+# use $
+res1 <- rent.US$City
+res2 <- rent.US$Jan.16
+head(res1)
+head(res2)
+# use [,]
+res1 <- rent.US[,1]
+res2 <- rent.US[,6]
+head(res1)
+head(res2)
 ```
 
 ### Question 1.2
 Pick any 2 rows one at a time from the rent.us data.
 ```{r}
-
+res1 <- rent.US[1,]
+res2 <- rent.US[2,]
+res1
+res2
 ```
 
 ### Question 1.3
 Select any 3 columns all at once using the [,] notation.
 ```{r}
-
+res <- rent.US[,c(1,4,6)]
+head(res)
 ```
 
 ### Question 1.4
 Select any 3 rows all at once using the [,] notation.
 ```{r}
-
+res <- rent.US[c(1,2,3),]
+res
 ```
 
 ### Question 1.5
 What happens if you try to select an individual row and an individual column at the same time? Try doing this using the [,] notation.
 ```{r}
-
+# This gives the element of the specific row and 
+rent.US[1,1]
 ```
 
 ### Question 1.6
 Now try selecting 3 rows and 2 columns at once using the [,] notation
 ```{r}
-
+rent.US[c(1,2,3),c(1,6)]
 ```
 
 ## Exercise 2
@@ -59,33 +76,40 @@ Now try selecting 3 rows and 2 columns at once using the [,] notation
 ### Question 2.1
 Sort your data using the order function from least to greatest rent from May 2016. Save this sorted data frame as a new object called rent_May_ord.
 ```{r}
-
+i.order <- order(rent.US$May.16)  # gives the order indices (descending is F by default)
+rent_May_ord <- rent.US[i.order,]  # get the ordered df
+head(rent_May_ord)
 ```
 
 ### Question 2.2
 Now sort your data using the order function from greatest to least Population.Rank and save this as a new object called rent_pop_rev.
 ```{r}
-
+i.order <- order(rent.US$Population.Rank, decreasing=T)
+rent_pop_rev <- rent.US[i.order,]
+head(rent_pop_rev)
 ```
 
 ## Exercise 3
-
 ### Question 3.1
 Use subset() and order() to identify the top 3 most expensive cities in Michigan (using September 2016 rent prices).
 ```{r}
-
+rent.MI <- subset(rent.US, State == 'MI')
+i.order <- order(rent.MI$Sep.16, decreasing=T)
+head(rent.MI[i.order,],3)
 ```
 
 ### Question 3.2
 Subset the data to include cities in CA, OR and WA that have rent less than 1500 on January 2016.
 ```{r}
-
+res <- subset(rent.US, State %in% c('CA', 'OR', 'WA') & Jan.16 < 1500)
+head(res)
 ```
 
 ### Question 3.3
 Subset the data to include cities in PA or cities that have rent less than 1000 on September 2016.
 ```{r}
-
+res <- subset(rent.US, State=='PA' | Sep.16<1000)
+head(res)
 ```
 
 ## Exercise 4
@@ -93,12 +117,21 @@ Subset the data to include cities in PA or cities that have rent less than 1000 
 ### Question 4.1
 Create a new vector that has cat,dog,cow,bird and name it animals. Next create a new vector that has meow,woof,moo,chirp and name it sounds. Join these two vectors by stacking them on top of one another. Now join them by placing them next to each other as columns.
 ```{r}
-
+animals <- c('cat', 'dog', 'cow', 'bird')
+sounds <- c('meow', 'woof', 'moo','chirp')
+rbind(animals, sounds)
+cbind(animals, sounds)
 ```
 
 ### Question 4.2
 Create a third vector that has the numbers 1,2,3,4 and name this numbers. Join numbers with animals. Show that the numbers vector stays numeric and the animals vector stays as a factor.
 ```{r}
+numbers <- c(1,2,3,4)
+class(animals)
 
+test <- as.factor(animals)
+class(test)
+res <- data.frame(numbers, test)
+str(res)
 ```
 
