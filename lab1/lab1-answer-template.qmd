@@ -1,0 +1,104 @@
+# Lab Setup
+Set your working directory and load any required libraries in this code chunk.
+
+```{r}
+rent.US <- read.csv("price2.csv")
+```
+
+# Practice Work
+Put any practice code in this code chunk. 
+
+```{r}
+
+
+```
+
+# Assignment
+
+## Exercise 1
+
+### Question 1.1
+
+Pick any 2 columns one at a time from the rent.US data. Do this using both the $ and the [,] notation.
+```{r}
+
+```
+
+### Question 1.2
+Pick any 2 rows one at a time from the rent.us data.
+```{r}
+
+```
+
+### Question 1.3
+Select any 3 columns all at once using the [,] notation.
+```{r}
+
+```
+
+### Question 1.4
+Select any 3 rows all at once using the [,] notation.
+```{r}
+
+```
+
+### Question 1.5
+What happens if you try to select an individual row and an individual column at the same time? Try doing this using the [,] notation.
+```{r}
+
+```
+
+### Question 1.6
+Now try selecting 3 rows and 2 columns at once using the [,] notation
+```{r}
+
+```
+
+## Exercise 2
+
+### Question 2.1
+Sort your data using the order function from least to greatest rent from May 2016. Save this sorted data frame as a new object called rent_May_ord.
+```{r}
+
+```
+
+### Question 2.2
+Now sort your data using the order function from greatest to least Population.Rank and save this as a new object called rent_pop_rev.
+```{r}
+
+```
+
+## Exercise 3
+
+### Question 3.1
+Use subset() and order() to identify the top 3 most expensive cities in Michigan (using September 2016 rent prices).
+```{r}
+
+```
+
+### Question 3.2
+Subset the data to include cities in CA, OR and WA that have rent less than 1500 on January 2016.
+```{r}
+
+```
+
+### Question 3.3
+Subset the data to include cities in PA or cities that have rent less than 1000 on September 2016.
+```{r}
+
+```
+
+## Exercise 4
+
+### Question 4.1
+Create a new vector that has cat,dog,cow,bird and name it animals. Next create a new vector that has meow,woof,moo,chirp and name it sounds. Join these two vectors by stacking them on top of one another. Now join them by placing them next to each other as columns.
+```{r}
+
+```
+
+### Question 4.2
+Create a third vector that has the numbers 1,2,3,4 and name this numbers. Join numbers with animals. Show that the numbers vector stays numeric and the animals vector stays as a factor.
+```{r}
+
+```
+
