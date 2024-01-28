@@ -138,6 +138,6 @@ animals <- as.factor(animals)  # turn vector elements into factor
 class(animals)
 res <- data.frame(numbers, animals)
 res
-str(animals)
+str(res)
 ```
 
