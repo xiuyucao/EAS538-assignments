@@ -1,17 +1,23 @@
 ---
+title: "Lab 1: Basic R Commands"
+author: "[Xiuyu Cao](https://github.com/xiuyucao)"
+date: "Jan 27, 2024"
+format:
+  html:
+    toc: true
 embed-resources: true
 ---
 
 # Lab Setup
 Set your working directory and load any required libraries in this code chunk.
-```{r}
-rent.US <- read.csv("../data/lab1/price2.csv")
+```{r set environment}
+getwd()  # print current working directory
+rent.US <- read.csv("../data/lab1/price2.csv")  # read data
 ```
 
 # Practice Work
 Put any practice code in this code chunk. 
-
-```{r}
+```{r practice}
 class(rent.US)  # type of the variable
 dim(rent.US)  # dimension (shape) of the data frame
 head(rent.US)  # first few lines of the df
@@ -61,7 +67,7 @@ res
 ### Question 1.5
 What happens if you try to select an individual row and an individual column at the same time? Try doing this using the [,] notation.
 ```{r}
-# This gives the element of the specific row and 
+# This gives the element of the specific row and col
 rent.US[1,1]
 ```
 
@@ -76,7 +82,7 @@ rent.US[c(1,2,3),c(1,6)]
 ### Question 2.1
 Sort your data using the order function from least to greatest rent from May 2016. Save this sorted data frame as a new object called rent_May_ord.
 ```{r}
-i.order <- order(rent.US$May.16)  # gives the order indices (descending is F by default)
+i.order <- order(rent.US$May.16)  # get the order indices (descending is F by default)
 rent_May_ord <- rent.US[i.order,]  # get the ordered df
 head(rent_May_ord)
 ```
@@ -127,11 +133,11 @@ cbind(animals, sounds)
 Create a third vector that has the numbers 1,2,3,4 and name this numbers. Join numbers with animals. Show that the numbers vector stays numeric and the animals vector stays as a factor.
 ```{r}
 numbers <- c(1,2,3,4)
+class(animals)  # originally, my animals store character instead of factor
+animals <- as.factor(animals)  # turn vector elements into factor
 class(animals)
-
-test <- as.factor(animals)
-class(test)
-res <- data.frame(numbers, test)
-str(res)
+res <- data.frame(numbers, animals)
+res
+str(animals)
 ```
 

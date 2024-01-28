@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Xiuyu Cao">
+<meta name="dcterms.date" content="2024-01-27">
 
-<title>lab1-answer-template</title>
+<title>Lab 1: Basic R Commands</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3015,34 +3017,102 @@ vertical-align: -.125em;
 
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#lab-setup" id="toc-lab-setup" class="nav-link active" data-scroll-target="#lab-setup">Lab Setup</a></li>
+  <li><a href="#practice-work" id="toc-practice-work" class="nav-link" data-scroll-target="#practice-work">Practice Work</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise 1</a>
+  <ul class="collapse">
+  <li><a href="#question-1.1" id="toc-question-1.1" class="nav-link" data-scroll-target="#question-1.1">Question 1.1</a></li>
+  <li><a href="#question-1.2" id="toc-question-1.2" class="nav-link" data-scroll-target="#question-1.2">Question 1.2</a></li>
+  <li><a href="#question-1.3" id="toc-question-1.3" class="nav-link" data-scroll-target="#question-1.3">Question 1.3</a></li>
+  <li><a href="#question-1.4" id="toc-question-1.4" class="nav-link" data-scroll-target="#question-1.4">Question 1.4</a></li>
+  <li><a href="#question-1.5" id="toc-question-1.5" class="nav-link" data-scroll-target="#question-1.5">Question 1.5</a></li>
+  <li><a href="#question-1.6" id="toc-question-1.6" class="nav-link" data-scroll-target="#question-1.6">Question 1.6</a></li>
+  </ul></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a>
+  <ul class="collapse">
+  <li><a href="#question-2.1" id="toc-question-2.1" class="nav-link" data-scroll-target="#question-2.1">Question 2.1</a></li>
+  <li><a href="#question-2.2" id="toc-question-2.2" class="nav-link" data-scroll-target="#question-2.2">Question 2.2</a></li>
+  </ul></li>
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3">Exercise 3</a>
+  <ul class="collapse">
+  <li><a href="#question-3.1" id="toc-question-3.1" class="nav-link" data-scroll-target="#question-3.1">Question 3.1</a></li>
+  <li><a href="#question-3.2" id="toc-question-3.2" class="nav-link" data-scroll-target="#question-3.2">Question 3.2</a></li>
+  <li><a href="#question-3.3" id="toc-question-3.3" class="nav-link" data-scroll-target="#question-3.3">Question 3.3</a></li>
+  </ul></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a>
+  <ul class="collapse">
+  <li><a href="#question-4.1" id="toc-question-4.1" class="nav-link" data-scroll-target="#question-4.1">Question 4.1</a></li>
+  <li><a href="#question-4.2" id="toc-question-4.2" class="nav-link" data-scroll-target="#question-4.2">Question 4.2</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 1: Basic R Commands</h1>
+</div>
 
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://github.com/xiuyucao">Xiuyu Cao</a> </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 27, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
 
 <section id="lab-setup" class="level1">
 <h1>Lab Setup</h1>
 <p>Set your working directory and load any required libraries in this code chunk.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rent.US <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;../data/lab1/price2.csv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()  <span class="co"># print current working directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] &quot;/Users/xycao/Desktop/EAS538/EAS538-assignments/lab1&quot;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rent.US <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;../data/lab1/price2.csv&quot;</span>)  <span class="co"># read data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="practice-work" class="level1">
 <h1>Practice Work</h1>
 <p>Put any practice code in this code chunk.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rent.US)  <span class="co"># type of the variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rent.US)  <span class="co"># type of the variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;data.frame&quot;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rent.US)  <span class="co"># dimension (shape) of the data frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rent.US)  <span class="co"># dimension (shape) of the data frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12918     8</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rent.US)  <span class="co"># first few lines of the df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rent.US)  <span class="co"># first few lines of the df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          City        Metro       County State Population.Rank Jan.16 May.16
 1     New York     New York       Queens    NY               1   2335   2339
@@ -3059,7 +3129,7 @@ vertical-align: -.125em;
 5   1220
 6   1238</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(rent.US)  <span class="co"># structure of the df (variable type of each attribute)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(rent.US)  <span class="co"># structure of the df (variable type of each attribute)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&#39;data.frame&#39;:   12918 obs. of  8 variables:
  $ City           : chr  &quot;New York&quot; &quot;Los Angeles&quot; &quot;Chicago&quot; &quot;Houston&quot; ...
@@ -3081,27 +3151,27 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-1.1">Question 1.1</h3>
 <p>Pick any 2 columns one at a time from the rent.US data. Do this using both the $ and the [,] notation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use $</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> rent.US<span class="sc">$</span>City</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> rent.US<span class="sc">$</span>Jan<span class="fl">.16</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use $</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> rent.US<span class="sc">$</span>City</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> rent.US<span class="sc">$</span>Jan<span class="fl">.16</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;New York&quot;     &quot;Los Angeles&quot;  &quot;Chicago&quot;      &quot;Houston&quot;      &quot;Philadelphia&quot;
 [6] &quot;Phoenix&quot;     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2335 2596 1668 1436 1196 1198</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use [,]</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> rent.US[,<span class="dv">1</span>]</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> rent.US[,<span class="dv">6</span>]</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use [,]</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> rent.US[,<span class="dv">1</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> rent.US[,<span class="dv">6</span>]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;New York&quot;     &quot;Los Angeles&quot;  &quot;Chicago&quot;      &quot;Houston&quot;      &quot;Philadelphia&quot;
 [6] &quot;Phoenix&quot;     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2335 2596 1668 1436 1196 1198</code></pre>
 </div>
@@ -3111,14 +3181,14 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-1.2">Question 1.2</h3>
 <p>Pick any 2 rows one at a time from the rent.us data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> rent.US[<span class="dv">1</span>,]</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> rent.US[<span class="dv">2</span>,]</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>res1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> rent.US[<span class="dv">1</span>,]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> rent.US[<span class="dv">2</span>,]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>res1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      City    Metro County State Population.Rank Jan.16 May.16 Sep.16
 1 New York New York Queens    NY               1   2335   2339   2324</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>res2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>res2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         City       Metro      County State Population.Rank Jan.16 May.16
 2 Los Angeles Los Angeles Los Angeles    CA               2   2596   2662
@@ -3131,8 +3201,8 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-1.3">Question 1.3</h3>
 <p>Select any 3 columns all at once using the [,] notation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> rent.US[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">6</span>)]</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> rent.US[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">6</span>)]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          City State Jan.16
 1     New York    NY   2335
@@ -3148,8 +3218,8 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-1.4">Question 1.4</h3>
 <p>Select any 3 rows all at once using the [,] notation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> rent.US[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),]</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> rent.US[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),]</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         City       Metro      County State Population.Rank Jan.16 May.16
 1    New York    New York      Queens    NY               1   2335   2339
@@ -3166,8 +3236,8 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-1.5">Question 1.5</h3>
 <p>What happens if you try to select an individual row and an individual column at the same time? Try doing this using the [,] notation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This gives the element of the specific row and </span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>rent.US[<span class="dv">1</span>,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This gives the element of the specific row and col</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>rent.US[<span class="dv">1</span>,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;New York&quot;</code></pre>
 </div>
@@ -3177,7 +3247,7 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-1.6">Question 1.6</h3>
 <p>Now try selecting 3 rows and 2 columns at once using the [,] notation</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>rent.US[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">6</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>rent.US[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">6</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         City Jan.16
 1    New York   2335
@@ -3193,9 +3263,9 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-2.1">Question 2.1</h3>
 <p>Sort your data using the order function from least to greatest rent from May 2016. Save this sorted data frame as a new object called rent_May_ord.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>i.order <span class="ot">&lt;-</span> <span class="fu">order</span>(rent.US<span class="sc">$</span>May<span class="fl">.16</span>)  <span class="co"># gives the order indices (descending is F by default)</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>rent_May_ord <span class="ot">&lt;-</span> rent.US[i.order,]  <span class="co"># get the ordered df</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rent_May_ord)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>i.order <span class="ot">&lt;-</span> <span class="fu">order</span>(rent.US<span class="sc">$</span>May<span class="fl">.16</span>)  <span class="co"># get the order indices (descending is F by default)</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>rent_May_ord <span class="ot">&lt;-</span> rent.US[i.order,]  <span class="co"># get the ordered df</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rent_May_ord)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    City      Metro   County State Population.Rank Jan.16
 4083             Beecher      Flint  Genesee    MI            4084    516
@@ -3218,9 +3288,9 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-2.2">Question 2.2</h3>
 <p>Now sort your data using the order function from greatest to least Population.Rank and save this as a new object called rent_pop_rev.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>i.order <span class="ot">&lt;-</span> <span class="fu">order</span>(rent.US<span class="sc">$</span>Population.Rank, <span class="at">decreasing=</span>T)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>rent_pop_rev <span class="ot">&lt;-</span> rent.US[i.order,]</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rent_pop_rev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>i.order <span class="ot">&lt;-</span> <span class="fu">order</span>(rent.US<span class="sc">$</span>Population.Rank, <span class="at">decreasing=</span>T)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>rent_pop_rev <span class="ot">&lt;-</span> rent.US[i.order,]</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rent_pop_rev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     City      Metro     County State Population.Rank Jan.16
 12918     Lebanon Borough   New York  Hunterdon    NJ           13131   1959
@@ -3246,9 +3316,9 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-3.1">Question 3.1</h3>
 <p>Use subset() and order() to identify the top 3 most expensive cities in Michigan (using September 2016 rent prices).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>rent.MI <span class="ot">&lt;-</span> <span class="fu">subset</span>(rent.US, State <span class="sc">==</span> <span class="st">&#39;MI&#39;</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>i.order <span class="ot">&lt;-</span> <span class="fu">order</span>(rent.MI<span class="sc">$</span>Sep<span class="fl">.16</span>, <span class="at">decreasing=</span>T)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rent.MI[i.order,],<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>rent.MI <span class="ot">&lt;-</span> <span class="fu">subset</span>(rent.US, State <span class="sc">==</span> <span class="st">&#39;MI&#39;</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>i.order <span class="ot">&lt;-</span> <span class="fu">order</span>(rent.MI<span class="sc">$</span>Sep<span class="fl">.16</span>, <span class="at">decreasing=</span>T)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rent.MI[i.order,],<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     City   Metro  County State Population.Rank Jan.16 May.16
 7884             Franklin Detroit Oakland    MI            8097   3725   3758
@@ -3265,8 +3335,8 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-3.2">Question 3.2</h3>
 <p>Subset the data to include cities in CA, OR and WA that have rent less than 1500 on January 2016.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">subset</span>(rent.US, State <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;CA&#39;</span>, <span class="st">&#39;OR&#39;</span>, <span class="st">&#39;WA&#39;</span>) <span class="sc">&amp;</span> Jan<span class="fl">.16</span> <span class="sc">&lt;</span> <span class="dv">1500</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">subset</span>(rent.US, State <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;CA&#39;</span>, <span class="st">&#39;OR&#39;</span>, <span class="st">&#39;WA&#39;</span>) <span class="sc">&amp;</span> Jan<span class="fl">.16</span> <span class="sc">&lt;</span> <span class="dv">1500</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             City       Metro         County State Population.Rank Jan.16
 34         Fresno      Fresno         Fresno    CA              34   1197
@@ -3289,8 +3359,8 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-3.3">Question 3.3</h3>
 <p>Subset the data to include cities in PA or cities that have rent less than 1000 on September 2016.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">subset</span>(rent.US, State<span class="sc">==</span><span class="st">&#39;PA&#39;</span> <span class="sc">|</span> Sep<span class="fl">.16</span><span class="sc">&lt;</span><span class="dv">1000</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">subset</span>(rent.US, State<span class="sc">==</span><span class="st">&#39;PA&#39;</span> <span class="sc">|</span> Sep<span class="fl">.16</span><span class="sc">&lt;</span><span class="dv">1000</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           City        Metro       County State Population.Rank Jan.16 May.16
 5  Philadelphia Philadelphia Philadelphia    PA               5   1196   1211
@@ -3316,15 +3386,15 @@ vertical-align: -.125em;
 <h3 class="anchored" data-anchor-id="question-4.1">Question 4.1</h3>
 <p>Create a new vector that has cat,dog,cow,bird and name it animals. Next create a new vector that has meow,woof,moo,chirp and name it sounds. Join these two vectors by stacking them on top of one another. Now join them by placing them next to each other as columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>animals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;dog&#39;</span>, <span class="st">&#39;cow&#39;</span>, <span class="st">&#39;bird&#39;</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>sounds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;meow&#39;</span>, <span class="st">&#39;woof&#39;</span>, <span class="st">&#39;moo&#39;</span>,<span class="st">&#39;chirp&#39;</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(animals, sounds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>animals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;dog&#39;</span>, <span class="st">&#39;cow&#39;</span>, <span class="st">&#39;bird&#39;</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>sounds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;meow&#39;</span>, <span class="st">&#39;woof&#39;</span>, <span class="st">&#39;moo&#39;</span>,<span class="st">&#39;chirp&#39;</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(animals, sounds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        [,1]   [,2]   [,3]  [,4]   
 animals &quot;cat&quot;  &quot;dog&quot;  &quot;cow&quot; &quot;bird&quot; 
 sounds  &quot;meow&quot; &quot;woof&quot; &quot;moo&quot; &quot;chirp&quot;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(animals, sounds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(animals, sounds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     animals sounds 
 [1,] &quot;cat&quot;   &quot;meow&quot; 
@@ -3338,22 +3408,28 @@ sounds  &quot;meow&quot; &quot;woof&quot; &quot;moo&quot; &quot;chirp&quot;</cod
 <h3 class="anchored" data-anchor-id="question-4.2">Question 4.2</h3>
 <p>Create a third vector that has the numbers 1,2,3,4 and name this numbers. Join numbers with animals. Show that the numbers vector stays numeric and the animals vector stays as a factor.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(animals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(animals)  <span class="co"># originally, my animals store character instead of factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;character&quot;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(animals)</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>animals <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(animals)  <span class="co"># turn vector elements into factor</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(animals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;factor&quot;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(numbers, test)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(numbers, animals)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&#39;data.frame&#39;:   4 obs. of  2 variables:
- $ numbers: num  1 2 3 4
- $ test   : Factor w/ 4 levels &quot;bird&quot;,&quot;cat&quot;,&quot;cow&quot;,..: 2 4 3 1</code></pre>
+<pre><code>  numbers animals
+1       1     cat
+2       2     dog
+3       3     cow
+4       4    bird</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(animals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 4 levels &quot;bird&quot;,&quot;cat&quot;,&quot;cow&quot;,..: 2 4 3 1</code></pre>
 </div>
 </div>
 </section>
