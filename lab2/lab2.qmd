@@ -55,7 +55,7 @@ for (i in c(1:length(sample_times))) {
   means <- meansVector(fireinfo, sample_times[i], 100, "BurnBndAc")  # get sample means
   avg <- round(mean(means), 5)  # mean of the sample means
   SD <- round(sd(means), 5)  # std of the sample means
-  hist(means, probability=T, main = paste0(sample_times[i], " Subsamples with 100 Values Each"), breaks=30)
+  hist(means, probability=T, main = paste0(sample_times[i], " Subsamples with 100 Values Each"), breaks=30, xlab='Mean Burn Area (acre)')
   legend("topright", bty = 'n', legend = c(paste0("mean=", avg), paste0("SD=", SD)), text.col = c("blue", "dark green"))
 }
 
@@ -80,7 +80,7 @@ for (i in c(1:length(sample_size))) {
   means <- meansVector(fireinfo, 1000, sample_size[i], "BurnBndAc")
   avg <- round(mean(means), 5)
   SD <- round(sd(means), 5)
-  hist(means, probability = TRUE, main = paste0("1000 subsamples with ", sample_size[i], " values each"), breaks=30)
+  hist(means, probability = TRUE, main = paste0("1000 subsamples with ", sample_size[i], " values each"), breaks=30, xlab='Mean Burn Area (acre)')
   legend("topright", bty = "n", legend = c(paste0("mean=", avg), paste0("SD=", SD)), text.col = c("blue", "dark green"))
 }
 ```
@@ -139,7 +139,7 @@ for (i in c(1:length(sample_times))) {
   means <- meansVector(rentdata, sample_times[i], 50)
   avg <- round(mean(means), 5)
   SD <- round(sd(means), 5)
-  hist(means, probability = TRUE, main = paste0(sample_times[i], ' Subsamples with 50 Values Each'), breaks=30)
+  hist(means, probability = TRUE, main = paste0(sample_times[i], ' Subsamples with 50 Values Each'), breaks=30, xlab='Mean Rent ($)')
   legend("topright", bty = "n", legend = c(paste0("mean=", avg), paste0("SD=", SD)), text.col = c("blue", "dark green"))
 }
 
@@ -150,7 +150,7 @@ for (i in c(1:length(sample_size))) {
   means <- meansVector(rentdata, 1000, sample_size[i])
   avg <- round(mean(means), 5)
   SD <- round(sd(means), 5)
-  hist(means, probability = TRUE, main = paste0('1000 Subsamples with ', sample_size[i], ' Values Each'), breaks=30)
+  hist(means, probability = TRUE, main = paste0('1000 Subsamples with ', sample_size[i], ' Values Each'), breaks=30, xlab='Mean Rent ($)')
   legend("topright", bty = "n", legend = c(paste0("mean=", avg), paste0("SD=", SD)), text.col = c("blue", "dark green"))
 }
 
