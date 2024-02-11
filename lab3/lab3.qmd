@@ -88,7 +88,7 @@ $$\mu_{apple} \ge 0.1477$$
 **Alternative Hypothesis:** The the pesticide value of the apples is less than USDA's pesticide limit (0.1477).
 $$\mu_{apple} < 0.1477$$
 
-**Answer:** I reject. Since this is a one-tail test and I only care the left side of the interval, which is $0.1476<0.1477$. Therefore, the 0.1477 falls outside of the CIs and we thus reject the null hypothesis.
+**Answer:** I reject. Since this is a one-tail test and I only care the right side of the interval, which is $0.1476<0.1477$. Therefore, the 0.1477 falls outside of the CIs and we thus reject the null hypothesis.
 
 ## Part 3
 > How would you change the code above if you ran a two-tailed, one-way t-test? Please calculate 95% confidence intervals for a two-tailed, one-way t-test and tell us whether you can reject the null hypothesis. 
@@ -126,7 +126,7 @@ $$\mu_{apple} \ge 0.1477$$
 **Alternative Hypothesis:** The the pesticide value of the apples is less than USDA's pesticide limit (0.1477).
 $$\mu_{apple} < 0.1477$$
 
-**Answer:** The left side of the CIs is $0.1476<0.1477$ (i.e. 0.1477 falls outside of the CIs). Therefore, I reject the null hypothesis. The CIs I calculated here using the z-distribution is almost the same to that using the t-distribution. This is due to our large sample size, making the t-distribution nearly normal.
+**Answer:** The right side of the CIs is $0.1476<0.1477$ (i.e. 0.1477 falls outside of the CIs). Therefore, I reject the null hypothesis. The CIs I calculated here using the z-distribution is almost the same to that using the t-distribution. This is due to our large sample size, making the t-distribution nearly normal.
 
 # Exercise 3
 ```{r}
