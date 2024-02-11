@@ -36,7 +36,7 @@ t.test(apdata[,'concen'], mu=0.1477)  # one-sample two-tail t-test
 ## Part 2
 > Write out the null and alternative hypothesis for a one-way, one-tailed t-test using the example above. What did your results tell you? Can you reject the null hypothesis (at the 0.05 level)?
 
-**Null Hypothesis:** The the pesticide value of the apples (\mu_{apple}) is greater than or equal to USDA's pesticide limit (0.1477) .
+**Null Hypothesis:** The the pesticide value of the apples ($\mu_{apple}$) is greater than or equal to USDA's pesticide limit (0.1477) .
 $$\mu_{apple} \ge 0.1477$$
 
 **Alternative Hypothesis:** The the pesticide value of the apples is less than USDA's pesticide limit (0.1477).
@@ -77,13 +77,12 @@ cifunt(meanval, tcritival, semval)
 ```
 > Why did you use 0.95 in your qt function instead of 0.975 (which is what you did last week)?
 
-Because in a *one-tail* t-test, I want to put the $\alpha$ area on one side of the distribution (in this case only the left side). Therefore, I use a $1-0.05=0.95$ instead of a $1-0.05/2=0.975$ in my `qt()` function.
+Because in a *one-tail* t-test, I want to put the $\alpha$ area on one side of the distribution (in this case only the right side). Therefore, I use a $1-0.05=0.95$ instead of a $1-0.05/2=0.975$ in my `qt()` function.
 
 ## Part 2
-  
 > Can you reject the null hypothesis based on the confidence intervals that you calculated?
 
-**Null Hypothesis:** The the pesticide value of the apples (\mu_{apple}) is greater than or equal to USDA's pesticide limit (0.1477) .
+**Null Hypothesis:** The the pesticide value of the apples ($\mu_{apple}$) is greater than or equal to USDA's pesticide limit (0.1477) .
 $$\mu_{apple} \ge 0.1477$$
 
 **Alternative Hypothesis:** The the pesticide value of the apples is less than USDA's pesticide limit (0.1477).
@@ -121,7 +120,7 @@ zcritival <- qnorm(0.95)
 semval <- (sd(apdata$concen)/sqrt(length(apdata$concen)))
 cifunz(meanval, zcritival, semval)
 ```
-**Null Hypothesis:** The the pesticide value of the apples (\mu_{apple}) is greater than or equal to USDA's pesticide limit (0.1477) .
+**Null Hypothesis:** The the pesticide value of the apples ($\mu_{apple}$) is greater than or equal to USDA's pesticide limit (0.1477) .
 $$\mu_{apple} \ge 0.1477$$
 
 **Alternative Hypothesis:** The the pesticide value of the apples is less than USDA's pesticide limit (0.1477).

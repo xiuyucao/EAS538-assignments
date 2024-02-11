@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Xiuyu Cao">
-<meta name="dcterms.date" content="2024-02-10">
+<meta name="dcterms.date" content="2024-02-11">
 
 <title>Lab 3: T-test</title>
 <style>
@@ -3185,7 +3185,7 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 10, 2024</p>
+      <p class="date">February 11, 2024</p>
     </div>
   </div>
   
@@ -3245,7 +3245,7 @@ mean of x
 <blockquote class="blockquote">
 <p>Write out the null and alternative hypothesis for a one-way, one-tailed t-test using the example above. What did your results tell you? Can you reject the null hypothesis (at the 0.05 level)?</p>
 </blockquote>
-<p><strong>Null Hypothesis:</strong> The the pesticide value of the apples (_{apple}) is greater than or equal to USDA’s pesticide limit (0.1477) . <span class="math display">\[\mu_{apple} \ge 0.1477\]</span></p>
+<p><strong>Null Hypothesis:</strong> The the pesticide value of the apples (<span class="math inline">\(\mu_{apple}\)</span>) is greater than or equal to USDA’s pesticide limit (0.1477) . <span class="math display">\[\mu_{apple} \ge 0.1477\]</span></p>
 <p><strong>Alternative Hypothesis:</strong> The the pesticide value of the apples is less than USDA’s pesticide limit (0.1477). <span class="math display">\[\mu_{apple} &lt; 0.1477\]</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(apdata[,<span class="st">&#39;concen&#39;</span>], <span class="at">alternative=</span><span class="st">&#39;less&#39;</span>, <span class="at">mu=</span><span class="fl">0.1477</span>)  <span class="co"># one-sample one-tail t test</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3301,14 +3301,14 @@ mean of x
 <blockquote class="blockquote">
 <p>Why did you use 0.95 in your qt function instead of 0.975 (which is what you did last week)?</p>
 </blockquote>
-<p>Because in a <em>one-tail</em> t-test, I want to put the <span class="math inline">\(\alpha\)</span> area on one side of the distribution (in this case only the left side). Therefore, I use a <span class="math inline">\(1-0.05=0.95\)</span> instead of a <span class="math inline">\(1-0.05/2=0.975\)</span> in my <code>qt()</code> function.</p>
+<p>Because in a <em>one-tail</em> t-test, I want to put the <span class="math inline">\(\alpha\)</span> area on one side of the distribution (in this case only the right side). Therefore, I use a <span class="math inline">\(1-0.05=0.95\)</span> instead of a <span class="math inline">\(1-0.05/2=0.975\)</span> in my <code>qt()</code> function.</p>
 </section>
 <section id="part-2-1" class="level2">
 <h2 class="anchored" data-anchor-id="part-2-1">Part 2</h2>
 <blockquote class="blockquote">
 <p>Can you reject the null hypothesis based on the confidence intervals that you calculated?</p>
 </blockquote>
-<p><strong>Null Hypothesis:</strong> The the pesticide value of the apples (_{apple}) is greater than or equal to USDA’s pesticide limit (0.1477) . <span class="math display">\[\mu_{apple} \ge 0.1477\]</span></p>
+<p><strong>Null Hypothesis:</strong> The the pesticide value of the apples (<span class="math inline">\(\mu_{apple}\)</span>) is greater than or equal to USDA’s pesticide limit (0.1477) . <span class="math display">\[\mu_{apple} \ge 0.1477\]</span></p>
 <p><strong>Alternative Hypothesis:</strong> The the pesticide value of the apples is less than USDA’s pesticide limit (0.1477). <span class="math display">\[\mu_{apple} &lt; 0.1477\]</span></p>
 <p><strong>Answer:</strong> I reject. Since this is a one-tail test and I only care the left side of the interval, which is <span class="math inline">\(0.1476&lt;0.1477\)</span>. Therefore, the 0.1477 falls outside of the CIs and we thus reject the null hypothesis.</p>
 </section>
@@ -3347,7 +3347,7 @@ mean of x
 <pre><code>[1] 0.1395654 0.1476050</code></pre>
 </div>
 </div>
-<p><strong>Null Hypothesis:</strong> The the pesticide value of the apples (_{apple}) is greater than or equal to USDA’s pesticide limit (0.1477) . <span class="math display">\[\mu_{apple} \ge 0.1477\]</span></p>
+<p><strong>Null Hypothesis:</strong> The the pesticide value of the apples (<span class="math inline">\(\mu_{apple}\)</span>) is greater than or equal to USDA’s pesticide limit (0.1477) . <span class="math display">\[\mu_{apple} \ge 0.1477\]</span></p>
 <p><strong>Alternative Hypothesis:</strong> The the pesticide value of the apples is less than USDA’s pesticide limit (0.1477). <span class="math display">\[\mu_{apple} &lt; 0.1477\]</span></p>
 <p><strong>Answer:</strong> The left side of the CIs is <span class="math inline">\(0.1476&lt;0.1477\)</span> (i.e. 0.1477 falls outside of the CIs). Therefore, I reject the null hypothesis. The CIs I calculated here using the z-distribution is almost the same to that using the t-distribution. This is due to our large sample size, making the t-distribution nearly normal.</p>
 </section>
