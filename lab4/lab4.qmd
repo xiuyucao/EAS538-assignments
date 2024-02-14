@@ -1,0 +1,157 @@
+---
+title: 'Lab 4: Data Wrangling'
+embed-resources: true
+author: "Xiuyu Cao"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+format:
+  html:
+    code-folding: show
+    highlight: textmate
+    number-sections: true
+    theme: flatly
+    toc: true
+    toc-depth: 4
+    toc-float:
+      collapsed: false
+      smooth-scroll: true
+---
+
+## Notes
+* means in the join?
+
+## Lab Setup
+Set your working directory and load dplyr and tidyr, then load in the data from RY.csv, sp_id.csv, and sp_stoi_traits.csv
+```{r lab setup, message=F}
+library(dplyr)
+library(tidyr)
+
+# data readin
+RY <- read.csv('../data/lab4/RY.csv')
+id <- read.csv('../data/lab4/sp_id.csv')
+trait <- read.csv('../data/lab4/sp_stoi_traits.csv')
+```
+
+```{r check the data}
+# check the data
+head(RY, 3)  # different species and relative yield of the species (compared to grow alone)
+head(id, 3)  # species names for each ID
+head(trait, 3)  # ratio of a speices element (C for carbon, N for nitrogen, and P for phosphorous)
+```
+
+# Mutate
+## Exercise 1
+```{r}
+head(RY, 3)
+RY <- mutate(RY, avgRY = (RY1 + RY2) / 2)
+head(RY, 3)
+```
+
+### Question 1.1
+What did we just do using the `mutate()` function? What column was added? What does the column represent?
+
+**Answer:** We used the `mutate()` to create a new column `avgRY`, which is the mean of the `RY1` and `RY2`.
+
+### Question 1.2
+Please use the mutate function to create a new column that is the sum of RY1 and RY2. Name this new column RYTotal and name this new dataframe RY.t. Please do not add this new column to the RY dataset because if you do you will run into problems later in the lab!
+```{r}
+RY.t <- RY %>%
+  mutate(RYTotal=RY1+RY2)
+head(RY.t)
+```
+
+# merge/join
+## Practice Work
+```{r}
+# join the RY and the id dataframe, get the species name
+colnames(id)[2] <- "sp1"
+RY.m <- left_join(RY, id, by = "sp1")
+colnames(RY.m)[6] <- "sp1_name"
+colnames(id)[2] <- "sp2"
+RY.m <- left_join(RY.m, id, by = "sp2")
+colnames(RY.m)[7] <- "sp2_name"
+
+# left join the RY.m and the trait dataframe
+colnames(trait)[1] <- "sp1_name"
+RY.mtl <- left_join(RY.m, trait, by = "sp1_name")
+mean(RY.mtl[, "C.N"], na.rm = TRUE)
+
+# inner join the RY.m and the trait dataframe
+colnames(trait)[1] <- "sp1_name"
+RY.mti <- inner_join(RY.m, trait, by = "sp1_name")
+mean(RY.mti[, "C.N"])
+```
+## Exercise 2
+### Question 2.1
+Please use right_join to join RY.m and trait by sp1_name and name this dataframe RY.mtr (please add RY.m and trait in the same order as you did in the two joins above).
+```{r}
+RY.mtr <- right_join(RY.m, trait, by = 'sp1_name')
+```
+
+How does this dataframe compare to the left_join dataframe RY.mtl and the inner_join dataframe RY.mti? 
+
+**Answer:** The `right_join()` result retains all observations in y (i.e. `trait` in this case). Therefore, some species only exist in `trait` but not in the `RY.m` remains in the result. The `inner_join()` only keeps the observations both in x and y. And the `left_join()` keeps all observations in x.
+
+# gather and spread
+## Practice Work
+```{r}
+# from wide to long
+RY.long <- gather(RY, key = RY_type, value = value, RY1:avgRY)
+head(RY.long, 3)
+
+# from long to wide
+RY.wide <- spread(RY.long, key = RY_type, value = value)
+head(RY.wide, 3)
+```
+
+# subset/filter
+## Practice Work
+```{r}
+# subset
+sp1 <- subset(RY, sp1 == 1, select=c(RY1))
+head(sp1)
+```
+
+## Exercise 3
+### Question 3.1
+Please use the subset function to subset your data for species number 17 in the species 2 column (sp2). Name this subset sp17. Now subset this data frame, sp17, to only include the column RY2.
+```{r}
+sp17 <- subset(RY, sp2 == 17)
+head(sp17, 3)
+sp17 <- subset(sp17, select=c(RY2))
+head(sp17, 3)
+```
+
+## Exercise 4
+### Question 4.1
+```{r}
+sp_test1 <- filter(RY, sp2 == 17 & sp1 == 1)
+head(sp_test1)
+
+sp_test2 <- filter(RY, sp2 == 17 | sp1 == 1)
+head(sp_test2)
+```
+1.  Please explain the difference between the above two data frames you created sp_test1 and sp_test2. What is the difference between using & versus \| in the filter() or subset() functions? 
+
+**Answer:** `sp_test1` only includes records that `sp2` = 17 and `sp1` = 1 at the same time; while `sp_test2` contains records that either `sp2` = 17 or `sp1` = 1. The difference between using & v.s. \| is that & needs to meet both of the conditions while \| only needs to meet one of the conditions.
+
+### Extra Credit (1 EXTRA POINT)
+Your turn! Use what we’ve learned above to generate the 'goal' data frame that was shown at the beginning of this lab.
+```{r}
+RY <- read.csv('../data/lab4/RY.csv')
+id <- read.csv('../data/lab4/sp_id.csv')
+trait <- read.csv('../data/lab4/sp_stoi_traits.csv')
+```
+
+
+```{r}
+trait.id <- inner_join(trait, id, by=join_by(Species.name==sp))
+
+goal <- RY %>%
+  mutate(avgRY=(RY1+RY2)/2) %>%
+  inner_join(trait.id, by=c('sp1'='id')) %>%
+  inner_join(trait.id, by=c('sp2'='id'), suffix=c('.x', '.y')) %>%
+  select(-c(Species.name.x, Species.name.y)) %>%
+  mutate(X=row_number()) %>%
+  select(X, sp2, sp1, everything())
+head(goal)
+```
