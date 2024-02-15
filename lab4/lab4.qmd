@@ -90,7 +90,7 @@ How does this dataframe compare to the left_join dataframe RY.mtl and the inner_
 tail(RY.mtr)
 ```
 
-# gather and spread
+# Gather & Spread
 ## Practice Work
 ```{r}
 # from wide to long
