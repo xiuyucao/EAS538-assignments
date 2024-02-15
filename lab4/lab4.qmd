@@ -17,7 +17,6 @@ format:
 ---
 
 # Lab Setup
-Set your working directory and load dplyr and tidyr, then load in the data from RY.csv, sp_id.csv, and sp_stoi_traits.csv
 ```{r lab setup, message=F}
 library(dplyr)
 library(tidyr)
@@ -60,7 +59,7 @@ head(RY.t)
 ## Practice Work
 ```{r}
 # join the RY and the id dataframe, get the species name
-colnames(id)[2] <- "sp1"
+colnames(id)[2] <- "sp1"  # This is a very complicated way of joining
 RY.m <- left_join(RY, id, by = "sp1")
 colnames(RY.m)[6] <- "sp1_name"
 colnames(id)[2] <- "sp2"
@@ -104,13 +103,6 @@ head(RY.wide, 3)
 ```
 
 # Subset/filter
-## Practice Work
-```{r}
-# subset
-sp1 <- subset(RY, sp1 == 1, select=c(RY1))
-head(sp1)
-```
-
 ## Exercise 3
 ### Question 3.1
 Please use the subset function to subset your data for species number 17 in the species 2 column (sp2). Name this subset sp17. Now subset this data frame, sp17, to only include the column RY2.

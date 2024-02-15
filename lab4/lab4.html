@@ -3048,15 +3048,14 @@ vertical-align: -.125em;
   </ul></li>
   <li><a href="#subsetfilter" id="toc-subsetfilter" class="nav-link" data-scroll-target="#subsetfilter"><span class="header-section-number">5</span> Subset/filter</a>
   <ul>
-  <li><a href="#practice-work-2" id="toc-practice-work-2" class="nav-link" data-scroll-target="#practice-work-2"><span class="header-section-number">5.1</span> Practice Work</a></li>
-  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="header-section-number">5.2</span> Exercise 3</a>
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="header-section-number">5.1</span> Exercise 3</a>
   <ul class="collapse">
-  <li><a href="#question-3.1" id="toc-question-3.1" class="nav-link" data-scroll-target="#question-3.1"><span class="header-section-number">5.2.1</span> Question 3.1</a></li>
+  <li><a href="#question-3.1" id="toc-question-3.1" class="nav-link" data-scroll-target="#question-3.1"><span class="header-section-number">5.1.1</span> Question 3.1</a></li>
   </ul></li>
-  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">5.3</span> Exercise 4</a>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">5.2</span> Exercise 4</a>
   <ul class="collapse">
-  <li><a href="#question-4.1" id="toc-question-4.1" class="nav-link" data-scroll-target="#question-4.1"><span class="header-section-number">5.3.1</span> Question 4.1</a></li>
-  <li><a href="#extra-credit-1-extra-point" id="toc-extra-credit-1-extra-point" class="nav-link" data-scroll-target="#extra-credit-1-extra-point"><span class="header-section-number">5.3.2</span> Extra Credit (1 EXTRA POINT)</a></li>
+  <li><a href="#question-4.1" id="toc-question-4.1" class="nav-link" data-scroll-target="#question-4.1"><span class="header-section-number">5.2.1</span> Question 4.1</a></li>
+  <li><a href="#extra-credit-1-extra-point" id="toc-extra-credit-1-extra-point" class="nav-link" data-scroll-target="#extra-credit-1-extra-point"><span class="header-section-number">5.2.2</span> Extra Credit (1 EXTRA POINT)</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -3095,7 +3094,6 @@ vertical-align: -.125em;
 
 <section id="lab-setup" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Lab Setup</h1>
-<p>Set your working directory and load dplyr and tidyr, then load in the data from RY.csv, sp_id.csv, and sp_stoi_traits.csv</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
@@ -3182,7 +3180,7 @@ vertical-align: -.125em;
 <h2 data-number="3.1" class="anchored" data-anchor-id="practice-work"><span class="header-section-number">3.1</span> Practice Work</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join the RY and the id dataframe, get the species name</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(id)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&quot;sp1&quot;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(id)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&quot;sp1&quot;</span>  <span class="co"># This is a very complicated way of joining</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>RY.m <span class="ot">&lt;-</span> <span class="fu">left_join</span>(RY, id, <span class="at">by =</span> <span class="st">&quot;sp1&quot;</span>)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(RY.m)[<span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="st">&quot;sp1_name&quot;</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(id)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&quot;sp2&quot;</span></span>
@@ -3265,39 +3263,22 @@ vertical-align: -.125em;
 </section>
 <section id="subsetfilter" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Subset/filter</h1>
-<section id="practice-work-2" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="practice-work-2"><span class="header-section-number">5.1</span> Practice Work</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>sp1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(RY, sp1 <span class="sc">==</span> <span class="dv">1</span>, <span class="at">select=</span><span class="fu">c</span>(RY1))</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sp1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>          RY1
-1 0.004167904
-2 0.007112204
-3 0.519281008
-4 0.004955600
-5 0.449101255
-6 0.883576608</code></pre>
-</div>
-</div>
-</section>
-<section id="exercise-3" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">5.2</span> Exercise 3</h2>
-<section id="question-3.1" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="question-3.1"><span class="header-section-number">5.2.1</span> Question 3.1</h3>
+<section id="exercise-3" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">5.1</span> Exercise 3</h2>
+<section id="question-3.1" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="question-3.1"><span class="header-section-number">5.1.1</span> Question 3.1</h3>
 <p>Please use the subset function to subset your data for species number 17 in the species 2 column (sp2). Name this subset sp17. Now subset this data frame, sp17, to only include the column RY2.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sp17 <span class="ot">&lt;-</span> <span class="fu">subset</span>(RY, sp2 <span class="sc">==</span> <span class="dv">17</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sp17, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sp17 <span class="ot">&lt;-</span> <span class="fu">subset</span>(RY, sp2 <span class="sc">==</span> <span class="dv">17</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sp17, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   sp1 sp2         RY1       RY2     avgRY
 14   1  17 0.007949608 1.0448059 0.5263777
 25   2  17 0.808653223 0.3098087 0.5592310
 38   3  17 0.113828498 0.7334857 0.4236571</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sp17 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sp17, <span class="at">select=</span><span class="fu">c</span>(RY2))</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sp17, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sp17 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sp17, <span class="at">select=</span><span class="fu">c</span>(RY2))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sp17, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         RY2
 14 1.0448059
@@ -3307,19 +3288,19 @@ vertical-align: -.125em;
 </div>
 </section>
 </section>
-<section id="exercise-4" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">5.3</span> Exercise 4</h2>
-<section id="question-4.1" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="question-4.1"><span class="header-section-number">5.3.1</span> Question 4.1</h3>
+<section id="exercise-4" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">5.2</span> Exercise 4</h2>
+<section id="question-4.1" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="question-4.1"><span class="header-section-number">5.2.1</span> Question 4.1</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sp_test1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(RY, sp2 <span class="sc">==</span> <span class="dv">17</span> <span class="sc">&amp;</span> sp1 <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sp_test1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sp_test1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(RY, sp2 <span class="sc">==</span> <span class="dv">17</span> <span class="sc">&amp;</span> sp1 <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sp_test1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  sp1 sp2         RY1      RY2     avgRY
 1   1  17 0.007949608 1.044806 0.5263777</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sp_test2 <span class="ot">&lt;-</span> <span class="fu">filter</span>(RY, sp2 <span class="sc">==</span> <span class="dv">17</span> <span class="sc">|</span> sp1 <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sp_test2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sp_test2 <span class="ot">&lt;-</span> <span class="fu">filter</span>(RY, sp2 <span class="sc">==</span> <span class="dv">17</span> <span class="sc">|</span> sp1 <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sp_test2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  sp1 sp2         RY1       RY2     avgRY
 1   1   2 0.004167904 1.1385059 0.5713369
@@ -3335,22 +3316,22 @@ vertical-align: -.125em;
 </ol>
 <p><strong>Answer:</strong> <code>sp_test1</code> only includes records that <code>sp2</code> = 17 and <code>sp1</code> = 1 at the same time; while <code>sp_test2</code> contains records that either <code>sp2</code> = 17 or <code>sp1</code> = 1. The difference between using &amp; v.s. | is that &amp; needs to meet both of the conditions while | only needs to meet one of the conditions.</p>
 </section>
-<section id="extra-credit-1-extra-point" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="extra-credit-1-extra-point"><span class="header-section-number">5.3.2</span> Extra Credit (1 EXTRA POINT)</h3>
+<section id="extra-credit-1-extra-point" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="extra-credit-1-extra-point"><span class="header-section-number">5.2.2</span> Extra Credit (1 EXTRA POINT)</h3>
 <p>Your turn! Use what we’ve learned above to generate the ‘goal’ data frame that was shown at the beginning of this lab.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start from the original data</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>RY <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../data/lab4/RY.csv&#39;</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../data/lab4/sp_id.csv&#39;</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>trait <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../data/lab4/sp_stoi_traits.csv&#39;</span>)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>trait.id <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(trait, id, <span class="at">by=</span><span class="fu">join_by</span>(Species.name<span class="sc">==</span>sp))</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>goal <span class="ot">&lt;-</span> RY <span class="sc">%&gt;%</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">avgRY =</span> (RY1 <span class="sc">+</span> RY2) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(trait.id, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&#39;sp1&#39;</span><span class="ot">=</span><span class="st">&#39;id&#39;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(trait.id, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&#39;sp2&#39;</span><span class="ot">=</span><span class="st">&#39;id&#39;</span>), <span class="at">suffix=</span><span class="fu">c</span>(<span class="st">&#39;.x&#39;</span>, <span class="st">&#39;.y&#39;</span>))</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(goal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start from the original data</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>RY <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../data/lab4/RY.csv&#39;</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../data/lab4/sp_id.csv&#39;</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>trait <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../data/lab4/sp_stoi_traits.csv&#39;</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>trait.id <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(trait, id, <span class="at">by=</span><span class="fu">join_by</span>(Species.name<span class="sc">==</span>sp))</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>goal <span class="ot">&lt;-</span> RY <span class="sc">%&gt;%</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">avgRY =</span> (RY1 <span class="sc">+</span> RY2) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(trait.id, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&#39;sp1&#39;</span><span class="ot">=</span><span class="st">&#39;id&#39;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(trait.id, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&#39;sp2&#39;</span><span class="ot">=</span><span class="st">&#39;id&#39;</span>), <span class="at">suffix=</span><span class="fu">c</span>(<span class="st">&#39;.x&#39;</span>, <span class="st">&#39;.y&#39;</span>))</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(goal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  sp1 sp2         RY1       RY2     avgRY          Species.name.x    C.N.x
 1   1   2 0.004167904 1.1385059 0.5713369 Ankistrodesmus falcatus 18.57258
