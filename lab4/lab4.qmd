@@ -16,10 +16,7 @@ format:
       smooth-scroll: true
 ---
 
-## Notes
-* means in the join?
-
-## Lab Setup
+# Lab Setup
 Set your working directory and load dplyr and tidyr, then load in the data from RY.csv, sp_id.csv, and sp_stoi_traits.csv
 ```{r lab setup, message=F}
 library(dplyr)
@@ -59,7 +56,7 @@ RY.t <- RY %>%
 head(RY.t)
 ```
 
-# merge/join
+# Merge/join
 ## Practice Work
 ```{r}
 # join the RY and the id dataframe, get the species name
@@ -89,7 +86,10 @@ RY.mtr <- right_join(RY.m, trait, by = 'sp1_name')
 
 How does this dataframe compare to the left_join dataframe RY.mtl and the inner_join dataframe RY.mti? 
 
-**Answer:** The `right_join()` result retains all observations in y (i.e. `trait` in this case). Therefore, some species only exist in `trait` but not in the `RY.m` remains in the result. The `inner_join()` only keeps the observations both in x and y. And the `left_join()` keeps all observations in x.
+**Answer:** The `right_join()` result retains all observations in y (i.e. `trait` in this case). Therefore, some species only exist in `trait` but not in the `RY.m` remains in the result, leading to the many 'NA' records in the `RY.mtr`. The `inner_join()` only keeps the observations both in x and y, thus giving the shortest result. And the `left_join()` keeps all observations in x.
+```{r}
+tail(RY.mtr)
+```
 
 # gather and spread
 ## Practice Work
@@ -103,7 +103,7 @@ RY.wide <- spread(RY.long, key = RY_type, value = value)
 head(RY.wide, 3)
 ```
 
-# subset/filter
+# Subset/filter
 ## Practice Work
 ```{r}
 # subset
@@ -137,21 +137,16 @@ head(sp_test2)
 ### Extra Credit (1 EXTRA POINT)
 Your turn! Use what we’ve learned above to generate the 'goal' data frame that was shown at the beginning of this lab.
 ```{r}
+# Start from the original data
 RY <- read.csv('../data/lab4/RY.csv')
 id <- read.csv('../data/lab4/sp_id.csv')
 trait <- read.csv('../data/lab4/sp_stoi_traits.csv')
-```
 
-
-```{r}
 trait.id <- inner_join(trait, id, by=join_by(Species.name==sp))
 
 goal <- RY %>%
-  mutate(avgRY=(RY1+RY2)/2) %>%
+  mutate(avgRY = (RY1 + RY2) / 2) %>%
   inner_join(trait.id, by=c('sp1'='id')) %>%
-  inner_join(trait.id, by=c('sp2'='id'), suffix=c('.x', '.y')) %>%
-  select(-c(Species.name.x, Species.name.y)) %>%
-  mutate(X=row_number()) %>%
-  select(X, sp2, sp1, everything())
+  inner_join(trait.id, by=c('sp2'='id'), suffix=c('.x', '.y'))
 head(goal)
 ```
