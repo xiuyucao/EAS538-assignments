@@ -3222,7 +3222,7 @@ X-squared = 5.3571, df = 1, p-value = 0.02064</code></pre>
 <li><strong>Result Interpretation: </strong>The P-value is 0.02.
 <ul>
 <li>For <span class="math inline">\(\alpha=0.05\)</span>, we reject the null hypothesis (<span class="math inline">\(0.02&lt;0.05\)</span>). The number of students that believe in climate change is associated with whether they are from New York or Kentucky.</li>
-<li>For <span class="math inline">\(\alpha=0.10\)</span>, we fail to reject the null hypothesis (<span class="math inline">\(0.02&gt;0.10\)</span>). The number of students that believe in climate change is independent of whether they are from New York or Kentucky.</li>
+<li>For <span class="math inline">\(\alpha=0.01\)</span>, we fail to reject the null hypothesis (<span class="math inline">\(0.02&gt;0.10\)</span>). The number of students that believe in climate change is independent of whether they are from New York or Kentucky.</li>
 </ul></li>
 </ul>
 </section>
@@ -3362,7 +3362,7 @@ H-D 55.250 22.955687  87.54431 3.895005e-05</code></pre>
 <blockquote class="blockquote">
 <p>Why do we use the Tukey’s HSD test instead of just running multiple t-tests that compare each pair of treatments in your sample?</p>
 </blockquote>
-<p><strong>Answer: </strong> Say we do t tests at <span class="math inline">\(\alpha=0.05\)</span>, multiple t tests will lead to a higher chance of committing at least one Type I error (<span class="math inline">\(1-0.95^{N_{times}}\)</span>). While the Tukey’s HSD has taken this into consideration, making it a better test instead of multiple t tests.</p>
+<p><strong>Answer: </strong> Say we do t tests at <span class="math inline">\(\alpha=0.05\)</span>, multiple t tests will lead to a higher chance of committing at least one Type I error (<span class="math inline">\(1-0.95^{N_{times}}\)</span>). Therefore, we use ANOVA instead of multiple t-tests. While ANOVA can tell us that there is a significant difference among groups, it doesn’t specify which groups are significantly different from each other. The Tukey’s HSD test is a post-hoc analysis that helps identify which specific group means are significantly different.</p>
 </section>
 </section>
 <section id="exercise-3" class="level1" data-number="3">
@@ -3535,8 +3535,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <td>Independent</td>
 </tr>
 <tr class="even">
-<td>share_unemp_seas</td>
-<td>Percentage of the unemployed population, Sep, 2016</td>
+<td>gini_index</td>
+<td>Gini Index, 2015</td>
 <td>numeric</td>
 <td>Independent</td>
 </tr>
@@ -3580,9 +3580,9 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(state_abbrev, median_house_inc, gini_index, hate_crimes_per_100k_splc) <span class="sc">%&gt;%</span>  <span class="co"># select only the interested cols</span></span>
 <span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span>  <span class="co"># remove records with NAs</span></span>
 <span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income.n=</span><span class="fu">getNormalized</span>(median_house_inc)) <span class="sc">%&gt;%</span>  <span class="co"># get normalized income</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gini_index.n=</span><span class="fu">getNormalized</span>(gini_index)) <span class="sc">%&gt;%</span>  <span class="co"># get normalized unemployment</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gini_index.n=</span><span class="fu">getNormalized</span>(gini_index)) <span class="sc">%&gt;%</span>  <span class="co"># get normalized Gini index</span></span>
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income.level=</span><span class="fu">cut</span>(income.n, <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="cn">Inf</span>), <span class="at">labels=</span>levels)) <span class="sc">%&gt;%</span>  <span class="co"># get categorical income levels</span></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gini_index.level=</span><span class="fu">cut</span>(gini_index.n, <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="cn">Inf</span>), <span class="at">labels=</span>levels)) <span class="sc">%&gt;%</span>  <span class="co"># get categorical unemployment levels</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gini_index.level=</span><span class="fu">cut</span>(gini_index.n, <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="cn">Inf</span>), <span class="at">labels=</span>levels)) <span class="sc">%&gt;%</span>  <span class="co"># get categorical gini index</span></span>
 <span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(state_abbrev, income.level, gini_index.level, hate_crimes_per_100k_splc)  <span class="co"># select only the interested cols</span></span>
 <span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_hatecrime, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3595,7 +3595,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 4 AR           Low          Medium                              0.0691
 5 CA           Medium       Medium                              0.256 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Statistical Analysis</span></span>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># two-way ANOVA</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>hatecrime.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(hate_crimes_per_100k_splc<span class="sc">~</span>income.level<span class="sc">+</span>gini_index.level, <span class="at">data=</span>my_hatecrime)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hatecrime.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3607,6 +3607,27 @@ Residuals        42 1.8810  0.0448
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 </div>
+<ul>
+<li><strong>Hypotheses</strong>
+<ul>
+<li>Difference in factor <code>income.level</code>
+<ul>
+<li><span class="math inline">\(H_0:\)</span> There is no difference in hate crime frequency between different income levels (<code>income.level</code>), controlling for Gini index level (<code>gini_index.level</code>).</li>
+<li><span class="math inline">\(H_A:\)</span> There is a difference in hate crime frequency between different income levels, controlling for Gini index level.</li>
+</ul></li>
+<li>Difference in factor <code>gini_index.level</code>
+<ul>
+<li><span class="math inline">\(H_0:\)</span> There is no difference in hate crime frequency between different Gini index levels, controlling for income level.</li>
+<li><span class="math inline">\(H_0:\)</span> There is a difference in hate crime frequency between different Gini index levels, controlling for income level.</li>
+</ul></li>
+</ul></li>
+<li><strong>Result Interpretation</strong>
+<ul>
+<li>The P-value for the <code>income.level</code> test is <span class="math inline">\(0.03436&lt;\alpha=0.05\)</span>. Therefore, we reject the null hypothesis. There is a difference in hate crime frequency between different income levels, controlling for Gini index level.</li>
+<li>The P-value for the <code>gini_index.level</code> test is <span class="math inline">\(0.00103&lt;&lt;\alpha=0.05\)</span>. Therefore, we reject the null hypothesis. There is a difference in hate crime frequency between different Gini index levels, controlling for income level.</li>
+<li>–&gt; Both factors have a significant effect on the hate crime frequency.</li>
+</ul></li>
+</ul>
 </section>
 </section>
 

@@ -34,7 +34,7 @@ chisq.test(contable)
 - **$H_A$ (Alternative hypothesis): **The number of students that believe in climate change is associated with which whether they are from New York or Kentucky.
 - **Result Interpretation: **The P-value is 0.02.
   - For $\alpha=0.05$, we reject the null hypothesis ($0.02<0.05$). The number of students that believe in climate change is associated with whether they are from New York or Kentucky.
-  - For $\alpha=0.10$, we fail to reject the null hypothesis ($0.02>0.10$). The number of students that believe in climate change is independent of whether they are from New York or Kentucky.
+  - For $\alpha=0.01$, we fail to reject the null hypothesis ($0.02>0.10$). The number of students that believe in climate change is independent of whether they are from New York or Kentucky.
 
 ## Exercise 1, Part 2
 > Now run the same analyses as above, but pick two different states. Use this [link](https://climatecommunication.yale.edu/visualizations-data/ycom-us/) to get information on the % of people who believe global warming is happening in each state in the US. *Hint - look at the numbers for Kentucky and New York. How did I use these to parameterize my `ccyes` and `ccno` values above? Please do the same thing, but pick two different states.* 
@@ -83,7 +83,7 @@ tukey_output.mat[i.significant,]
 ## Exercise 2, Part 2
 > Why do we use the Tukey's HSD test instead of just running multiple t-tests that compare each pair of treatments in your sample?
 
-**Answer: ** Say we do t tests at $\alpha=0.05$, multiple t tests will lead to a higher chance of committing at least one Type I error ($1-0.95^{N_{times}}$). While the Tukey's HSD has taken this into consideration, making it a better test instead of multiple t tests.
+**Answer: ** Say we do t tests at $\alpha=0.05$, multiple t tests will lead to a higher chance of committing at least one Type I error ($1-0.95^{N_{times}}$). Therefore, we use ANOVA instead of multiple t-tests. While ANOVA can tell us that there is a significant difference among groups, it doesn't specify which groups are significantly different from each other. The Tukey's HSD test is a post-hoc analysis that helps identify which specific group means are significantly different.
 
 # Exercise 3
 ```{r}
@@ -157,7 +157,7 @@ I found this `hate_crimes` dataset from the `fivethirtyeight` package interestin
 | Attribute                 | Meaning                                                   | Class   | Type |
 |---------------------------|-----------------------------------------------------------|---------|---------------|
 | median_house_inc          | Median household income, 2016                             | numeric | Independent   |
-| share_unemp_seas          | Percentage of the unemployed population, Sep, 2016        | numeric | Independent   |
+| gini_index                | Gini Index, 2015                                          | numeric | Independent   |
 | hate_crimes_per_100k_splc | Average annual hate crimes per 100k population, 2016      | numeric | Dependent     |
 ```{r}
 head(hate_crimes, 3)  # The dataset I will be using
@@ -178,14 +178,26 @@ my_hatecrime <- hate_crimes %>%
   select(state_abbrev, median_house_inc, gini_index, hate_crimes_per_100k_splc) %>%  # select only the interested cols
   na.omit() %>%  # remove records with NAs
   mutate(income.n=getNormalized(median_house_inc)) %>%  # get normalized income
-  mutate(gini_index.n=getNormalized(gini_index)) %>%  # get normalized unemployment
+  mutate(gini_index.n=getNormalized(gini_index)) %>%  # get normalized Gini index
   mutate(income.level=cut(income.n, breaks=c(-Inf, 1/3, 2/3, Inf), labels=levels)) %>%  # get categorical income levels
-  mutate(gini_index.level=cut(gini_index.n, breaks=c(-Inf, 1/3, 2/3, Inf), labels=levels)) %>%  # get categorical unemployment levels
+  mutate(gini_index.level=cut(gini_index.n, breaks=c(-Inf, 1/3, 2/3, Inf), labels=levels)) %>%  # get categorical gini index
   select(state_abbrev, income.level, gini_index.level, hate_crimes_per_100k_splc)  # select only the interested cols
 head(my_hatecrime, 5)
 
-# Statistical Analysis
+# two-way ANOVA
 hatecrime.aov <- aov(hate_crimes_per_100k_splc~income.level+gini_index.level, data=my_hatecrime)
 summary(hatecrime.aov)
 ```
+
+* **Hypotheses**
+  * Difference in factor `income.level`
+    * $H_0:$ There is no difference in hate crime frequency between different income levels (`income.level`), controlling for Gini index level (`gini_index.level`).
+    * $H_A:$ There is a difference in hate crime frequency between different income levels, controlling for Gini index level.
+  * Difference in factor `gini_index.level`
+    * $H_0:$ There is no difference in hate crime frequency between different Gini index levels, controlling for income level.
+    * $H_0:$ There is a difference in hate crime frequency between different Gini index levels, controlling for income level.
+* **Result Interpretation**
+  * The P-value for the `income.level` test is $0.03436<\alpha=0.05$. Therefore, we reject the null hypothesis. There is a difference in hate crime frequency between different income levels, controlling for Gini index level.
+  * The P-value for the `gini_index.level` test is $0.00103<<\alpha=0.05$. Therefore, we reject the null hypothesis. There is a difference in hate crime frequency between different Gini index levels, controlling for income level.
+  * --> Both factors have a significant effect on the hate crime frequency.
 
