@@ -173,18 +173,19 @@ getNormalized <- function(vec){
 }
 levels <- c('Low', 'Medium', 'High')  # set levels
 
+
 my_hatecrime <- hate_crimes %>%
-  select(state_abbrev, median_house_inc, share_unemp_seas, hate_crimes_per_100k_splc) %>%  # select only the interested cols
+  select(state_abbrev, median_house_inc, gini_index, hate_crimes_per_100k_splc) %>%  # select only the interested cols
   na.omit() %>%  # remove records with NAs
   mutate(income.n=getNormalized(median_house_inc)) %>%  # get normalized income
-  mutate(unemp.n=getNormalized(share_unemp_seas)) %>%  # get normalized unemployment
+  mutate(gini_index.n=getNormalized(gini_index)) %>%  # get normalized unemployment
   mutate(income.level=cut(income.n, breaks=c(-Inf, 1/3, 2/3, Inf), labels=levels)) %>%  # get categorical income levels
-  mutate(unemp.level=cut(unemp.n, breaks=c(-Inf, 1/3, 2/3, Inf), labels=levels)) %>%  # get categorical unemployment levels
-  select(state_abbrev, income.level, unemp.level, hate_crimes_per_100k_splc)  # select only the interested cols
+  mutate(gini_index.level=cut(gini_index.n, breaks=c(-Inf, 1/3, 2/3, Inf), labels=levels)) %>%  # get categorical unemployment levels
+  select(state_abbrev, income.level, gini_index.level, hate_crimes_per_100k_splc)  # select only the interested cols
 head(my_hatecrime, 5)
 
 # Statistical Analysis
-hatecrime.aov <- aov(hate_crimes_per_100k_splc~income.level+unemp.level, data=my_hatecrime)
+hatecrime.aov <- aov(hate_crimes_per_100k_splc~income.level+gini_index.level, data=my_hatecrime)
 summary(hatecrime.aov)
 ```
 

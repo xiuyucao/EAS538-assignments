@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Xiuyu Cao">
-<meta name="dcterms.date" content="2024-02-22">
+<meta name="dcterms.date" content="2024-02-23">
 
 <title>Lab 5: Chi-square &amp; ANOVA</title>
 <style>
@@ -3178,7 +3178,7 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 22, 2024</p>
+      <p class="date">February 23, 2024</p>
     </div>
   </div>
   
@@ -3575,33 +3575,34 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Low&#39;</span>, <span class="st">&#39;Medium&#39;</span>, <span class="st">&#39;High&#39;</span>)  <span class="co"># set levels</span></span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>my_hatecrime <span class="ot">&lt;-</span> hate_crimes <span class="sc">%&gt;%</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(state_abbrev, median_house_inc, share_unemp_seas, hate_crimes_per_100k_splc) <span class="sc">%&gt;%</span>  <span class="co"># select only the interested cols</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span>  <span class="co"># remove records with NAs</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income.n=</span><span class="fu">getNormalized</span>(median_house_inc)) <span class="sc">%&gt;%</span>  <span class="co"># get normalized income</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unemp.n=</span><span class="fu">getNormalized</span>(share_unemp_seas)) <span class="sc">%&gt;%</span>  <span class="co"># get normalized unemployment</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income.level=</span><span class="fu">cut</span>(income.n, <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="cn">Inf</span>), <span class="at">labels=</span>levels)) <span class="sc">%&gt;%</span>  <span class="co"># get categorical income levels</span></span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unemp.level=</span><span class="fu">cut</span>(unemp.n, <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="cn">Inf</span>), <span class="at">labels=</span>levels)) <span class="sc">%&gt;%</span>  <span class="co"># get categorical unemployment levels</span></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(state_abbrev, income.level, unemp.level, hate_crimes_per_100k_splc)  <span class="co"># select only the interested cols</span></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_hatecrime, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>my_hatecrime <span class="ot">&lt;-</span> hate_crimes <span class="sc">%&gt;%</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(state_abbrev, median_house_inc, gini_index, hate_crimes_per_100k_splc) <span class="sc">%&gt;%</span>  <span class="co"># select only the interested cols</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span>  <span class="co"># remove records with NAs</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income.n=</span><span class="fu">getNormalized</span>(median_house_inc)) <span class="sc">%&gt;%</span>  <span class="co"># get normalized income</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gini_index.n=</span><span class="fu">getNormalized</span>(gini_index)) <span class="sc">%&gt;%</span>  <span class="co"># get normalized unemployment</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income.level=</span><span class="fu">cut</span>(income.n, <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="cn">Inf</span>), <span class="at">labels=</span>levels)) <span class="sc">%&gt;%</span>  <span class="co"># get categorical income levels</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gini_index.level=</span><span class="fu">cut</span>(gini_index.n, <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="cn">Inf</span>), <span class="at">labels=</span>levels)) <span class="sc">%&gt;%</span>  <span class="co"># get categorical unemployment levels</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(state_abbrev, income.level, gini_index.level, hate_crimes_per_100k_splc)  <span class="co"># select only the interested cols</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_hatecrime, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
-  state_abbrev income.level unemp.level hate_crimes_per_100k_splc
-  &lt;chr&gt;        &lt;fct&gt;        &lt;fct&gt;                           &lt;dbl&gt;
-1 AL           Low          High                           0.126 
-2 AK           High         High                           0.144 
-3 AZ           Medium       High                           0.225 
-4 AR           Low          Medium                         0.0691
-5 CA           Medium       High                           0.256 </code></pre>
+  state_abbrev income.level gini_index.level hate_crimes_per_100k_splc
+  &lt;chr&gt;        &lt;fct&gt;        &lt;fct&gt;                                &lt;dbl&gt;
+1 AL           Low          Medium                              0.126 
+2 AK           High         Low                                 0.144 
+3 AZ           Medium       Low                                 0.225 
+4 AR           Low          Medium                              0.0691
+5 CA           Medium       Medium                              0.256 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Statistical Analysis</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>hatecrime.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(hate_crimes_per_100k_splc<span class="sc">~</span>income.level<span class="sc">+</span>unemp.level, <span class="at">data=</span>my_hatecrime)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>hatecrime.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(hate_crimes_per_100k_splc<span class="sc">~</span>income.level<span class="sc">+</span>gini_index.level, <span class="at">data=</span>my_hatecrime)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hatecrime.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)  
-income.level  2 0.3275 0.16375   2.771 0.0741 .
-unemp.level   2 0.1279 0.06393   1.082 0.3482  
-Residuals    42 2.4823 0.05910                 
+<pre><code>                 Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+income.level      2 0.3275  0.1638   3.656 0.03436 * 
+gini_index.level  2 0.7292  0.3646   8.141 0.00103 **
+Residuals        42 1.8810  0.0448                   
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
