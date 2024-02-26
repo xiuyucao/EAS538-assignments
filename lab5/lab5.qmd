@@ -51,7 +51,7 @@ chisq.test(contable)
 ```
 - **$H_0$ (Null hypothesis): **The percent of people that believe in climate change is independent of whether they are from Texas or Washington.
 - **$H_A$ (Alternative hypothesis): **The percent of people that believe in climate change is associated with whether they are from Texas or Washington.
-- **Result Interpretation: ** The P-value is $0.6287>\alpha=0.5$. Therefore, we fail to reject the null hypothesis. The percent of people that believe in climate change is independent of whether they are from Texas or Washington.
+- **Result Interpretation: ** The P-value is $0.6287>\alpha=0.05$. Therefore, we fail to reject the null hypothesis. The percent of people that believe in climate change is independent of whether they are from Texas or Washington.
 
 # Exercise 2
 ```{r}
