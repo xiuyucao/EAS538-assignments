@@ -24,18 +24,16 @@ cor(airquality[, c("Ozone", "Solar.R", "Wind", "Temp")],
     use = "complete.obs")    # use the rows where there is both a value for x and y
 ```
 ## Question 1.1
-**Answer:** The correlation between `Ozone` and `Wind` is -0.6124966. In my opinion, this is a moderate to strong *negative* correlation. It means when ozone level increases, wind speed tends to decrease, and vice versa.
+**Answer:** The correlation between `Ozone` and `Wind` is -0.6124966. In my opinion, this is a moderate to strong *negative* correlation. It means when ozone level increases, wind speed decreases, and vice versa.
 
 ## Question 1.2
-**Answer:** The correlation between `Ozone` and `Solar.R` is 0.3483417. In my opinion, this is a weak to moderate *positive* correlation. It means when the ozone level increases, Solar R tends to increase, and vice cersa.
+**Answer:** The correlation between `Ozone` and `Solar.R` is 0.3483417. In my opinion, this is a weak to moderate *positive* correlation. It means when the ozone level increases, Solar R increases, and vice versa.
 
 
 # Exercise 2
 ## Question 2.1
 ```{r}
-head(faithful, 3)
-# Plot waiting against eruptions
-plot(eruptions~waiting, data=faithful)
+plot(eruptions~waiting, data=faithful)  # Plot waiting against eruptions
 ```
 
 ## Question 2.2
@@ -127,10 +125,12 @@ library(lmtest)
 library(car)
 library(dplyr)
 
-# Create linear model
+# remove NAs
 dat.airquality <- airquality %>%
   select(Temp, Ozone)  %>%
-  na.omit
+  na.omit()
+
+# Create linear model
 mod <- lm(Temp~Ozone, data=dat.airquality)
 summary(mod)
 ```
@@ -156,6 +156,6 @@ qqPlot(residuals(mod))
 # Shapiro-Wilk test
 shapiro.test(residuals(mod))
 ```
-**Result Interpretation:** From the Q-Q plot, some opoints laid out of the range. From the Shapiro-Wilk test, the p value is $0.000226<\alpha=0.05$. We thus reject $H_0$: the data being tested are drawn from a normally distributed population. Therefore, the requirement of residual normality is NOT met.
+**Result Interpretation:** From the Q-Q plot, some points laid out of the intervals. From the Shapiro-Wilk test, the p value is $0.000226<\alpha=0.05$. We thus reject $H_0$: the data being tested are drawn from a normally distributed population. Therefore, the requirement of residual normality is NOT met.
 
 
