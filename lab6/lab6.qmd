@@ -1,0 +1,161 @@
+---
+title: "Lab 6: Linear Regression"
+embed-resources: true
+author: "Xiuyu Cao"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+format:
+  html:
+    code-folding: show
+    highlight: textmate
+    number-sections: true
+    theme: flatly
+    toc: TRUE
+    toc-depth: 4
+    toc-float:
+      collapsed: false
+      smooth-scroll: true
+---
+
+# Exercise 1
+```{r}
+pairs(airquality[,c('Ozone','Solar.R', 'Wind', 'Temp')])  # scatter plot
+
+cor(airquality[, c("Ozone", "Solar.R", "Wind", "Temp")], 
+    use = "complete.obs")    # use the rows where there is both a value for x and y
+```
+## Question 1.1
+**Answer:** The correlation between `Ozone` and `Wind` is -0.6124966. In my opinion, this is a moderate to strong *negative* correlation. It means when ozone level increases, wind speed tends to decrease, and vice versa.
+
+## Question 1.2
+**Answer:** The correlation between `Ozone` and `Solar.R` is 0.3483417. In my opinion, this is a weak to moderate *positive* correlation. It means when the ozone level increases, Solar R tends to increase, and vice cersa.
+
+
+# Exercise 2
+## Question 2.1
+```{r}
+head(faithful, 3)
+# Plot waiting against eruptions
+plot(eruptions~waiting, data=faithful)
+```
+
+## Question 2.2
+```{r}
+# Calculate the correlation coefficient
+cor(faithful$eruptions, faithful$waiting)
+```
+
+
+# Exercise 3
+## Question 3.1
+Notes: For full points, include model, interpretation and plot.
+
+For a complete interpretation, include slope significance (alpha and p-value), slope and R2 interpretation, and intercept value with alpha and p-value.
+```{r}
+# Build linear model
+mod <- lm(Temp~Ozone, data=airquality)
+summary(mod)
+
+# Plot scatterplot with estimated regression line
+plot(Temp~Ozone, data=airquality)
+abline(mod, col='red')
+```
+
+**Answer:**
+
+* The slope is 0.20081. This means for every 1 unit increase in ozone, the temperature increases by 0.20081. The P value of the slope is $2 \times 10^{-16}<<\alpha=0.05$. So we reject $H_0:Slope=0$, there is a significant relationship between ozone and temperature.
+* $R^2=0.4877$. 48.77% of the variation in temperature is explained by ozone.
+* The intercept is 69.41072. This means that when ozone is zero, temperature is predicted to be 69.41072. The intercept has a p value of $2 \times 10^{-16}<<\alpha=0.05$. Meaning the temperature is significantly different from zero when ozone is zero.
+
+## Question 3.2
+Note: For full points, include model, interpretation and plot.
+```{r}
+# Build linear model
+mod <- lm(eruptions~waiting, data=faithful)
+summary(mod)
+
+#Plot scatterplot with estimated regression line
+plot(eruptions~waiting, data=faithful)
+abline(mod, col='red')
+```
+
+**Answer:**
+
+* The slope is 0.075628. This means for every 1 unit increase in waiting time, the eruption time increases by 0.075628. The P value of the slope is $2 \times 10^{-16}<<\alpha=0.05$. So we reject $H_0:Slope=0$, there is a significant relationship between waiting and eruptions.
+* $R^2=0.8115$. 81.15% of the variation in eruptions is explained by waiting time.
+* The intercept is -1.874016. This means that when waiting time is zero, eruption time is predicted to be -1.87 (not meaningful in real world context). The intercept has a p value of $2 \times 10^{-16}<<\alpha=0.05$. Meaning the eruption time is significantly different from zero when waiting time is zero.
+
+
+# Exercise 4
+
+## Question 4.1
+Note: To receive full credit, answer the three parts.
+```{r}
+mod <- lm(Temp~Wind, data=airquality)
+r2 <- summary(mod)$r.squared
+
+# get SSY
+y <- airquality$Temp
+meany <- mean(y)
+diff <- y-meany
+SSY <- sum(diff^2)
+
+# get SSYp
+x <- data.frame(Wind=airquality$Wind)
+predy <- predict.lm(mod, x)
+diff <- predy-meany
+SSYp <- sum(diff^2)
+
+# get SSE
+diff <- predy-y
+SSE <- sum(diff^2)
+SSE
+
+# Verify SSY - SSYp = SSE
+SSY-SSYp==SSE
+```
+
+**What is SSE measuring in non-technical terms?**
+
+SSE is the sum of the squared deviations between the actual value and the predicted value. It's measuring the amount of vairation not explained by the model.
+
+
+# Exercise 5
+## Question 5.1
+Note: Your final answer should include three parts: the model, tests for assumptions of homoscedasticity (perform all 3) and normality (perform both shapiro.test and qqPlot) and interpret of the results of homoscedasticity and normality tests.
+```{r, message=F}
+library(lmtest)
+library(car)
+library(dplyr)
+
+# Create linear model
+dat.airquality <- airquality %>%
+  select(Temp, Ozone)  %>%
+  na.omit
+mod <- lm(Temp~Ozone, data=dat.airquality)
+summary(mod)
+```
+
+### Check whether the model meets assumptions
+#### Residual Homoscedasticity
+```{r}
+# visual
+plot(residuals(mod)~Ozone, data=dat.airquality,
+     main='Residuals v.s. Fitted', xlab='Fitted', ylab='Residuals')
+abline(h=0, col='red')
+
+# statistical test
+bptest(mod)
+```
+**Result Interpretation:** The p value of the Breush-Pegan test is $0.0721>\alpha=0.05$. We thus fail to reject $H_0$: The variance is constant. Therefore, the requirement of homoscedasticity is met.
+
+#### Normal Distributed Residuals
+```{r}
+# Q-Q plot
+qqPlot(residuals(mod))
+
+# Shapiro-Wilk test
+shapiro.test(residuals(mod))
+```
+**Result Interpretation:** From the Q-Q plot, some opoints laid out of the range. From the Shapiro-Wilk test, the p value is $0.000226<\alpha=0.05$. We thus reject $H_0$: the data being tested are drawn from a normally distributed population. Therefore, the requirement of residual normality is NOT met.
+
+
