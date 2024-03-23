@@ -1,0 +1,104 @@
+---
+title: 'Lab 7: Multiple Linear Regression'
+embed-resources: true
+author: "Xiuyu Cao"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+format:
+  html:
+    code-folding: show
+    highlight: textmate
+    number-sections: true
+    theme: flatly
+    toc: TRUE
+    toc-depth: 4
+    toc-float:
+      collapsed: false
+      smooth-scroll: true
+---
+
+## Lab Setup
+```{r, message=F}
+library(lmtest)
+library(car)
+library(relaimpo)
+
+# load data
+yield <- read.csv('../data/lab7/yielddata.csv')
+head(yield, 3)
+```
+
+# Exercise 1
+## Question 1.1
+```{r}
+pairs(yield[,3:12])  # scatter plot of the continuous variables
+
+cor(yield[,3:12], use='complete.obs')  # correlation table of the continuous variables
+
+vif(lm(Yield~Canal_Dist+Irrigated_Per+Literate+Cultivator+AgLabor+Rain+Temperature+Elevation+SowDate, data=yield))  # get VIF
+```
+From the scatter plot, we can see some variable pairs showing correlation (e.g. `Temperature` & `Elevation` has strong negative correlation). From the correlation matrix, the correlation between `Temperature` and `Rain` (0.63), `Elevation` and `Rain` (-0.57), `Temperature` and `Elevation` (-0.88) are middle to high. From the `vif()` output, the VIF of `Temperature` is high (6.08>5), which means `Temperature` is highly correlated with other variables. Therefore, `Temperature` would lead to multi-collinearity in my model; also, the VIF of `Elevation` is 4.74, nearly 5, it may also lead to multi-collinearity in my model.
+
+## Question 1.2
+According to the output of `cor()` function, `Temperature` and `Elevation` are the two most correlated variables (-0.88).
+```{r}
+# two separate univariate models of the two variables
+univar_mod1 <- lm(Yield~Temperature, data=yield)
+univar_mod2 <- lm(Yield~Elevation, data=yield)
+
+# multivariate model of two variables
+multivar_mod <- lm(Yield~Temperature+Elevation, data=yield)
+
+# compare the models
+summary(univar_mod1)
+summary(univar_mod2)
+summary(multivar_mod)
+```
+Although the beta coefficients all have very small P values ($<<\alpha=0.05$), which means they are all significantly different from 0, the ones of the univariate model are different from the ones of multivariate model because the two variables are highly correlated and lead to multicollinearity. As a result, the model may allocate some of the effe ct of one variable to the other, making the estimation of coefficients unstable. This is why the beta coefficients differ from uni- and multivariate models.
+
+# Exercise 2
+## Question 2.1
+```{r}
+fullmod2 <- lm(Yield ~ Canal_Dist + Irrigated_Per + Literate + Cultivator + AgLabor + Temperature + SowDate, data = yield)
+smallmod <- lm(Yield ~ Canal_Dist + Irrigated_Per + Temperature + SowDate, data = yield)
+
+# compare the AIC
+AIC(fullmod2)
+AIC(smallmod)
+```
+According to the AIC of the 2 models, the full model has the smaller AIC. Therefore, I would select the full model.
+
+## Question 2.2
+```{r}
+## test the assumption of normality
+qqPlot(residuals(fullmod2))  # Q-Q plot
+shapiro.test(residuals(fullmod2))  # Shapiro-Wilk test
+```
+From the Q-Q plot, we can say the residuals are normally distributed. Also, based on the Shapiro-Wilk test, the p value is $0.78>\alpha=0.05$. We thus fail to reject $H_0:$ *The residuals are normally distributed.* Therefore, the requirement of residual normality is met.
+
+
+```{r}
+## test the assumption of homoscedasticity
+# visual check
+plot(residuals(fullmod2)~fitted(fullmod2), main='Residuals v.s. Fitted')
+abline(h=0, col='red')
+# statistical tests
+bptest(fullmod2)
+ncvTest(fullmod2)
+```
+From both the BP test and NCV test, the p values$<\alpha=0.05$. We thus reject $H_0:$ *The variance is constant.* Therefore, the requirement of homoscedasticity is NOT met.
+
+## Question 2.3
+```{r}
+summary(fullmod2)
+summary(univar_mod1)
+```
+From the summary of the full model, the intercept ($P=2\times10^{-16}<<\alpha=0.05$), the slope of `Temperature` ($P=1.27\times10^{-12}<<\alpha=0.05$), and the slope of `SowDate` ($P=0.014<\alpha=0.05$) are significant. The absolute value of beta coefficient value of `Temperature` of the multivariate model ($|-142.98|$) is smaller than that of the univariate model ($|-186.43|$). This is because with other dependent variables the effect of `Temperature` on `Yield` in the multivariate model will be smaller compared to that of the univariate model where only `Temperature` is considered.
+
+# Exercise 3
+## Question 3.1
+```{r}
+calc.relimp(fullmod2, type=c('lmg'), rela=TRUE)
+```
+Based on the relative importance metrics, `Temperature` explains the most amount of variance (0.59), `SowDate` explains the second most, `Canal_Dist` (0.006) explains the least.
+
+
