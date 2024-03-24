@@ -139,7 +139,7 @@ summary(mod)
 #### Residual Homoscedasticity
 ```{r}
 # visual
-plot(residuals(mod)~Ozone, data=dat.airquality,
+plot(residuals(mod)~fitted(mod), data=dat.airquality,
      main='Residuals v.s. Fitted', xlab='Fitted', ylab='Residuals')
 abline(h=0, col='red')
 
