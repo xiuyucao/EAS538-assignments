@@ -53,7 +53,7 @@ summary(univar_mod1)
 summary(univar_mod2)
 summary(multivar_mod)
 ```
-Although the beta coefficients all have very small P values ($<<\alpha=0.05$), which means they are all significantly different from 0, the ones of the univariate model are different from the ones of multivariate model because the two variables are highly correlated and lead to multicollinearity. As a result, the model may allocate some of the effe ct of one variable to the other, making the estimation of coefficients unstable. This is why the beta coefficients differ from uni- and multivariate models.
+Although the beta coefficients all have very small P values ($<<\alpha=0.05$), which means they are all significantly different from 0, the ones of the univariate model are different from the ones of multivariate model because the two variables are highly correlated and lead to multicollinearity. As a result, the model may allocate some of the effect of one variable to the other, making the estimation of coefficients unstable. This is why the beta coefficients differ from uni- and multivariate models.
 
 # Exercise 2
 ## Question 2.1
