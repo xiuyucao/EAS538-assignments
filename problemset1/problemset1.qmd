@@ -27,7 +27,7 @@ library(car)
 ```{r}
 # The test socres of 3 groups of students from EAS 538
 data1 <- read.csv('../data/problemset1/data_q1.csv')
-head(data1)
+head(data1, 3)
 ```
 
 ## a 
@@ -42,7 +42,7 @@ head(data1)
 boxplot(scores~group, data=data1,
         xlab='Group', ylab='Scores', main='Test Scores of 3 EAS538  Student Groups')
 ```
-From the plot, the scores of group 1 seem lower than the other two groups.
+From the plot, the mean score of group 1 seem lower than that of the other two groups.
 
 ## c 
 **Answer**: 3 groups, continuous y and categorical x --> Use ANOVA.
@@ -91,14 +91,14 @@ TukeyHSD(data1.aov)
 ```{r}
 # number of birds seen in different forests in Michigan and Indiana
 data2 <- read.csv('../data/problemset1/data_q2.csv')
-head(data2)
+head(data2, 3)
 ```
 
 ## a 
 **Answer**:
 
-*$H_0:$ There is no difference between the mean number of birds seen in a forest in Michigan and in Indiana.
-*$H_A:$ There is a difference between the mean number of birds seen in a forest in Michigan and in Indiana.
+* $H_0:$ There is no difference between the mean number of birds seen in a forest in Michigan and in Indiana.
+* $H_A:$ There is a difference between the mean number of birds seen in a forest in Michigan and in Indiana.
 
 ## b
 ```{r}
@@ -132,7 +132,7 @@ shapiro.test(IN$BirdNum)
 * Sample is randomly selected from the population --> Assume so
 * Observations are independent --> Assume so
 * Equal variance between 2 populations --> From the output of the `var.test()`, the p value is $0.417>\alpha=0.05$. We thus fail to reject $H_0:$ *The variance is equal among the two groups.* Therefore, the assumption of equal variance is met.
-* Values are nearly normal or the sample size is large enough --> From the outputs of the `shapiro.test()`, the p values all $<\alpha=0.05$. We thus reject $H_0:$ *The data are normally distributed.* However, although the data are not normally distributed, we have large sample size (199>30, 179>30). Therefore, this assumption is also met.
+* Values are nearly normal or the sample size is large enough --> From the outputs of the `shapiro.test()`, the p values all $<\alpha=0.05$. We thus reject $H_0:$ *The data are normally distributed.* However, although the data are not normally distributed, we have large sample size (199>30, 179>30). Therefore, this assumption is still met.
 
 ## d 
 ```{r}
@@ -146,7 +146,7 @@ t.test(MI$BirdNum, IN$BirdNum)
 ```{r}
 # average number of cricket chirps heard per hour in different parks across the US
 data3 <- read.csv('../data/problemset1/data_q3.csv')
-head(data3)
+head(data3, 3)
 ```
 
 ## a 
@@ -173,7 +173,7 @@ plot(Chirps~Temperature, data=data3)
 ## Check linear regression assumptions
 mod <- lm(Chirps~Temperature, data=data3)
 
-# linear relationship --> see the plot above
+# linear relationship --> see the scatter plot above
 
 # Residual Normality
 shapiro.test(residuals(mod))
@@ -215,7 +215,7 @@ head(data4, 3)
 **Answer**:
 
 * $H_0:$ A person's social disposition is independent of their pet.
-* $H_1:$ A person's social disposition is not independent of their pet.
+* $H_A:$ A person's social disposition is not independent of their pet.
 
 ## b
 **Answer**: categorical y and x --> Chi-square
@@ -238,7 +238,7 @@ chisq.test(table.pet)
 
 
 ## c 
-**Answer**: According to the Chi-square test result, the p value is $2.055\times10^{-6}$, we therefore reject $H_0$. We can say that a person's social disposition associated with their pet, with introvert person more likely to have a bird or cat, and extrovert person amore likely to have a dog.
+**Answer**: According to the Chi-square test result, the p value is $2.055\times10^{-6}$, we therefore reject $H_0$. We can say that a person's social disposition associated with their pet, with introvert person more likely to have a bird or cat, and extrovert person more likely to have a dog.
 
 
 
