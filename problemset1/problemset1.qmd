@@ -1,0 +1,245 @@
+---
+title: "Problem Set 1"
+embed-resources: true
+author: "Xiuyu Cao"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+format:
+  html:
+    code-folding: show
+    highlight: textmate
+    number-sections: true
+    theme: flatly
+    toc: TRUE
+    toc-depth: 4
+    toc-float:
+      collapsed: false
+      smooth-scroll: true
+---
+
+## Lab Setup
+Set your working directory and load libraries.
+```{r message=F}
+library(tidyverse)
+library(car)
+```
+
+# Question 1 
+```{r}
+# The test socres of 3 groups of students from EAS 538
+data1 <- read.csv('../data/problemset1/data_q1.csv')
+head(data1)
+```
+
+## a 
+**Answer**:
+
+* $H_0:$ There is no difference in the test scores of the 3 student groups.
+* $H_A:$ At least one of the 3 student groups has different mean scores comparing to the others.
+
+
+## b 
+```{r}
+boxplot(scores~group, data=data1,
+        xlab='Group', ylab='Scores', main='Test Scores of 3 EAS538  Student Groups')
+```
+From the plot, the scores of group 1 seem lower than the other two groups.
+
+## c 
+**Answer**: 3 groups, continuous y and categorical x --> Use ANOVA.
+```{r}
+## Check ANOVA assumptions
+
+# Equal Variance
+leveneTest(scores~group, data1, center=mean)
+
+# Normality
+group1 <- filter(data1, group=='group1')
+group2 <- filter(data1, group=='group2')
+group3 <- filter(data1, group=='group3')
+
+dim(group1)
+dim(group2)
+dim(group3)
+
+shapiro.test(group1$scores)
+shapiro.test(group2$scores)
+shapiro.test(group3$scores)
+```
+**Conclusion**
+
+* Continuous response data --> Met
+* Samples must be independent --> Assume so
+* Each population must have the same variance --> From the output of the `leveneTest()`, the p value is $0.26>\alpha=0.05$. We thus fail to reject $H_0:$ *The variance is equal among the groups.* Therefore, the ANOVA's equal variance assumption is met.
+* The populations of interest must be normally distributed --> From the outputs of the `shapiro.test()` of each group, the p values all $>\alpha=0.05$. We thus fail to reject the $H_0:$ *The input scores are normally distributed.* Therefore, the AVOVA's normality assumption is met.
+
+## d 
+```{r}
+# ANOVA test
+data1.aov <- aov(scores~group, data=data1)
+summary(data1.aov)
+
+# Tukey test
+TukeyHSD(data1.aov)
+```
+**Answer**:
+
+* From the output of `aov()`, the p value is $7.65\times10^{-6}<<\alpha=0.05.$ We thus reject $H_0$, we can say that at least one of the 3 student groups has different mean scores comparing to the others.
+* From the output of `dim()`, the three groups are of the same size, we can then do the Tukey's HSD test. From the output of `TukeyHSD()`, group 1 is significantly smaller than group 2 ($P=0.001<\alpha=0.05$), group 1 is significantly smaller than group3 ($P=8\times10^{-6}<<\alpha=0.05$).
+
+
+# Question 2 
+```{r}
+# number of birds seen in different forests in Michigan and Indiana
+data2 <- read.csv('../data/problemset1/data_q2.csv')
+head(data2)
+```
+
+## a 
+**Answer**:
+
+*$H_0:$ There is no difference between the mean number of birds seen in a forest in Michigan and in Indiana.
+*$H_A:$ There is a difference between the mean number of birds seen in a forest in Michigan and in Indiana.
+
+## b
+```{r}
+boxplot(BirdNum~State, data=data2, main='Number of Birds Seen in Forests in MI and IN')
+```
+From the plot there seems a difference between the mean number of birds seen in a forest in Michigan and in Indiana.
+
+## c 
+**Answer**: 2 groups, continuous y and categorical x --> Two sample two tailed t-test
+```{r}
+## Check t-test assumptions
+
+# get 2 groups
+MI <- filter(data2, State=='Michigan')
+IN <- filter(data2, State=='Indiana')
+
+# Equal Variance
+var(MI$BirdNum)
+var(IN$BirdNum)
+var.test(MI$BirdNum, IN$BirdNum)
+
+# Normality
+dim(MI)
+shapiro.test(MI$BirdNum)
+dim(IN)
+shapiro.test(IN$BirdNum)
+```
+**T-test Assumptions**
+
+* Continuous response data --> Met
+* Sample is randomly selected from the population --> Assume so
+* Observations are independent --> Assume so
+* Equal variance between 2 populations --> From the output of the `var.test()`, the p value is $0.417>\alpha=0.05$. We thus fail to reject $H_0:$ *The variance is equal among the two groups.* Therefore, the assumption of equal variance is met.
+* Values are nearly normal or the sample size is large enough --> From the outputs of the `shapiro.test()`, the p values all $<\alpha=0.05$. We thus reject $H_0:$ *The data are normally distributed.* However, although the data are not normally distributed, we have large sample size (199>30, 179>30). Therefore, this assumption is also met.
+
+## d 
+```{r}
+t.test(MI$BirdNum, IN$BirdNum)
+```
+
+**Answer**: From the result of the t-test, the p value is $7.288\times10^{-13}<<\alpha=0.05$. We thus reject $H_0$, and we can say that there is a significant difference between the mean number of birds seen in a forest in Michigan and in Indiana. The mean birds seen in a forest in Michigan (45.4) is higher than than that (30.5) of Indiana.
+
+
+# Question 3 
+```{r}
+# average number of cricket chirps heard per hour in different parks across the US
+data3 <- read.csv('../data/problemset1/data_q3.csv')
+head(data3)
+```
+
+## a 
+```{r}
+cor(data3)
+```
+
+**Answer**: The correlation between temperature and number of cricked chirps is 0.78. This is a strong *positive* correlation. It means when temperature increases, chirps increases, and vice versa.
+
+## b 
+```{r}
+plot(Chirps~Temperature, data=data3)
+```
+
+## c 
+**Answer**:
+
+* $H_0:$ There is no significant relationship between `Chirps` and `Temperature`.
+* $H_1:$ There is a significant relationship between `Chirps` and `Temperature`.
+
+## d 
+**Answer**: continuous y and continuous x --> Linear regression.
+```{r}
+## Check linear regression assumptions
+mod <- lm(Chirps~Temperature, data=data3)
+
+# linear relationship --> see the plot above
+
+# Residual Normality
+shapiro.test(residuals(mod))
+
+# Homoscedasticity
+ncvTest(mod)
+```
+
+**Linear Regression Assumptions**: 
+
+* There is a linear relationship between the variables --> According to the scatter plot, met.
+* Statistical independence of the errors --> Assume so
+* Normality of the error distribution --> According to the output of the `shapiro.test()`, the p value is $0.62>\alpha=0.05$. We thus fail to reject $H_0:$ *The residuals are normally distributed.* Therefore, the assumption of residual normality is met.
+* Homoscedasticity --> According to the output of the `ncvTest()`, the p value is $0.397>\alpha=0.05$. We thus fail to reject $H_0:$ *The variance is constant*. Therefore, the assumption of homoscedasticity is met.
+
+## e
+```{r}
+summary(mod)
+```
+**Answer:**
+
+* The slope is 2.66. This means for every 1 unit increase in `Temperature`, the `Chirps` increases by 2.6636. The p value is $2\times10^{-16}<<\alpha=0.05.$ Therefore we reject $H_0:Slope=0$, there is a significant relationship between chirps and temperature
+* The intercept is 35.1067. This means that when `Temperature` is zero, `Chirps` is predicted to be 35.1067. The p value is $8.04\times10^{-12}<<\alpha=0.05$, meaning the `Chirps` is significantly different from zero when `Temperature` is zero. 
+
+
+## f
+**Answer:** According to the output of the model summary, we have an $R^2$ of 0.609. This means 60.9% of the variation in `Chirps` is explained by `Temperature`, which is a good fit.
+
+
+# Question 4 
+```{r}
+# person type and their pet
+data4 <- read.csv('../data/problemset1/data_q4.csv')
+head(data4, 3)
+```
+
+
+## a 
+**Answer**:
+
+* $H_0:$ A person's social disposition is independent of their pet.
+* $H_1:$ A person's social disposition is not independent of their pet.
+
+## b
+**Answer**: categorical y and x --> Chi-square
+```{r}
+# get contingency table
+table.pet <- table(data4$pet, data4$social)
+table.pet
+```
+**Chi-square Test Assumptions**
+
+* Data in cells are counts/frequencies --> Met
+* Categories are mutually exclusive --> Met
+* Samples must be independent --> Assume so
+* All cells must be filled, more than 5 obs --> Met
+
+```{r}
+# run the test
+chisq.test(table.pet)
+```
+
+
+## c 
+**Answer**: According to the Chi-square test result, the p value is $2.055\times10^{-6}$, we therefore reject $H_0$. We can say that a person's social disposition associated with their pet, with introvert person more likely to have a bird or cat, and extrovert person amore likely to have a dog.
+
+
+
+
