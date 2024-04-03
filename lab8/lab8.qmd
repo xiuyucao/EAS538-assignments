@@ -1,5 +1,5 @@
 ---
-title: 'Lab 8: ANCOVA and interactions'
+title: 'Lab 8: ANCOVA and Interactions'
 embed-resources: true
 author: "Xiuyu Cao"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
