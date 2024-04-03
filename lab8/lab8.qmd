@@ -1,0 +1,213 @@
+---
+title: 'Lab 8: ANCOVA and interactions'
+embed-resources: true
+author: "Xiuyu Cao"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+format:
+  html:
+    code-folding: show
+    highlight: textmate
+    number-sections: true
+    theme: flatly
+    toc: TRUE
+    toc-depth: 4
+    toc-float:
+      collapsed: false
+      smooth-scroll: true
+---
+
+## Lab Setup
+```{r, message=F}
+# Load libraries
+library(dplyr)  # for data manipulation
+library(car)  # for equal variance test
+library(lmtest)  # for lm assumption test
+
+# Read in data
+dataset <- read.csv("../data/lab8/sanddata.csv", sep = ",", header = T,comment.char = "#", stringsAsFactors = T)
+head(dataset, 3)
+```
+* `juveniles`: number of juvenile cranes counted annually
+* `sand`: tons of sand removed annually
+* `temperature`: mean annual temperature in degrees Celsius
+* `rainfall`: total annual rainfall in mm
+* `humanpop`: total human population (in 1000s) within 50 miles of each site
+* `country`: country where each site is found (China, India, Indonesia, or Malaysia)
+
+
+# Exercise 1
+```{r}
+# check multicollinearity
+cor(dataset[, -6], dataset[,-6])  # get corr, exclude col 6
+
+# get linear model
+linmod <- lm(juveniles ~ sand + temperature + rainfall + humanpop + country, data=dataset)
+
+# check linear relationship
+par(mfrow = c(2,2))
+plot(juveniles ~ sand, data = dataset)
+plot(juveniles ~ temperature, data = dataset)
+plot(juveniles ~ rainfall, data = dataset)
+plot(juveniles ~ humanpop, data = dataset)
+
+# check residual homoscedasticity and normality
+par(mfrow = c(2,2))
+plot(linmod)
+
+# get results
+summary(linmod)
+```
+
+## Question 1.1
+**Answer:**
+
+*Interpretation of the significant coefficients (at $\alpha=0.05$)*
+
+* Intercept ($P=2\times10^{-16}<\alpha$): With `sand`, `temperature`, `rainfall`, and `humanpop` being zero, it is predicted that there will be 4603.66 juvenile cranes on average in China.
+* sand ($P=2\times10^{-16}<\alpha$): Every one ton of sand removed is associated with a reduction of 1.5 juvenile cranes (copied from lab instruction).
+* temperature ($P=1.73\times10^{-8}<\alpha$): Every degree Celsius of temperature raised is associated with a reduction of 76.8 juvenile cranes.
+* humanpop ($P=0.005<\alpha$): Every 1,000 increase in population within 50 miles is associated with a reduction of 0.4 juvenile cranes.
+* countryMalaysia ($P=0.0004<\alpha$): On average, Malaysia has 190.5 fewer juvenile cranes than China when controlling for `sand`, `temperature`, `rainfall`, and `humanpop`.
+
+## Question 1.2
+**Answer**: 
+
+*Interpretation of the non-significant coefficients (at $\alpha=0.05$)*
+
+* rainfall ($P=0.43>\alpha$): There is no significant linear relationship between `rainfall` and `juveniles`.
+* countryIndia ($P=0.53>\alpha$): There is no significant difference in `juveniles` between India and China, controlling for `sand`, `temperature`, `rainfall`, and `humanpop`.
+* countryIndonesia ($P=0.38>\alpha$): There is no significant difference in `juveniles` between India and China, controlling for `sand`, `temperature`, `rainfall`, and `humanpop`.
+
+
+# Exercise 2
+## Question 2
+```{r}
+table(dataset$country)
+
+# use India as baseline intercept
+dataset.releveled <- dataset %>%
+  mutate(country=relevel(country, ref='India'))  # relevel India to the first
+
+# rerun the linear model
+linmod2 <- lm(juveniles ~ sand + temperature + rainfall + humanpop + country, data = dataset.releveled)
+summary(linmod2)
+```
+**Answer**:
+
+Coefficients of the continuous variables (`sand`, `temperature`, `rainfall`, and `humanpop`) stay the same while those of the categorical ones and the intercept are changed. This is due to the change of the baseline variable (China to India). Now the intercept is the cranes in India, instead of China, when the continuous variables are zero, and the coefficients of the categorical variables are now the difference of them from the `juveniles` in India.
+
+
+
+# Exercise 3 
+```{r warnings=F}
+# get model
+anomod <- aov(juveniles ~ sand + temperature + rainfall + humanpop + country, data = dataset)
+
+# check the assumption of equal variance
+leveneTest(juveniles ~ country, data = dataset)  # from the result, met
+
+# get model results
+summary(anomod)
+
+# do Tukey HSD to see which groups are different
+tukey.mat <- TukeyHSD(anomod)$country
+tukey.mat
+```
+## Question 3
+**Answer**:
+
+*Interpretation of the Tukey HSD test result:*
+
+We can get additional information on pairwise comparisons instead of only the countries comparing to the baseline country when doing `lm()`. The countries that are significantly different from one another are as follows.
+```{r get significantly different pairs from Tukey HSD result}
+i.significant <- tukey.mat[,4]<0.05
+tukey.mat[i.significant,]
+```
+
+# Exercise 4
+## Question 4
+```{r}
+# change the order of the variables
+anomod3 <- aov(juveniles ~ temperature + rainfall + humanpop + country + sand, data = dataset)
+summary(anomod3)
+
+```
+**Answer**: 
+
+Comparing the p values between `anomod` and `anomod3`. Which variables are significant (at $\alpha=0.05$) are the same (only `rianfall` not being significant). However, the p values are not the same between these two models.
+
+
+# Exercise 5
+```{r}
+linmod5 <- lm(juveniles ~ sand + temperature + rainfall + humanpop + country + humanpop*country, data = dataset)
+summary(linmod5)
+
+# visualize
+plot(1:1000, rep(-100, 1000), ylim = c(4000, 5500), xlim = c(50, 1000), xlab = 'Human Population', ylab = 'Juveniles')
+abline(a = 5054.11977, b = -1.24563, col = 'blue') # China
+abline(a = 5054.11977 - 818.65030, b = -1.24563 + 1.31526, col = 'red') # India
+abline(a = 5054.11977 - 961.39246 , b = -1.24563 + 1.53082, col = 'orange') # Indonesia
+abline(a = 5054.11977 - 676.65413, b = -1.24563 + 0.81239, col = 'green') # Malaysia
+legend("topright", legend=c("China", "India", "Indonesia", "Malaysia"),
+       col=c("blue", "red", "orange", "green"), lty=1)
+```
+## Question 5
+**Answer**: 
+
+The numbers to calculate the slopes for each country are from the `humanpop` and `humanpop:countryIndia`, `humanpop:countryIndonesia`, and `humanpop:countryMalaysia`. The latter three are the difference in slopes from the baseline slope (slope of `humanpop`).
+
+
+# Extra Credit (Code and outputs required)
+## Check Data
+```{r}
+iris <- iris %>%
+  mutate(Species=as.factor(Species))
+head(iris, 3)
+```
+I would like to study the relationship of `Petal.Width` between other variables.
+
+## Check Multicollinearity
+```{r}
+# plot relationship
+pairs(iris[,-5])  # scatter plot of the continuous variables
+
+# check for multicollinearity
+cor(iris[,-5], iris[,-5])
+```
+The correlation coefficient between `Petal.Length` and `Sepal.Length` (0.87) is high, indicating a strong positive relationship, which may cause multicollinearity. Therefore I would exclude `Petal.Length`.
+
+## Check Linear Regression Assumptions
+```{r}
+mod <- lm(Petal.Width~Sepal.Length+Sepal.Width+Species, data=iris)
+summary(mod)
+
+# linear relationship
+par(mfrow = c(1,2))
+plot(Petal.Width ~ Sepal.Length, data=iris)
+plot(Petal.Width ~ Sepal.Width, data=iris)
+
+# Homoscedasticity
+bptest(mod)
+
+# Error Normality
+shapiro.test(residuals(mod))
+```
+*Linear Regression Assumptions:*
+
+* Linear relationship between variables: from the plot - met.
+* Statistical independence of the errors: assume so.
+* Homoscedasticity: $P=0.0003<\alpha=0.05$ --> reject null hypothesis of homoscedasticity - not met.
+* Error Normality: $P=0.29>\alpha=0.05$  --> fail to reject null hypothesis of error normality - met.
+
+## Results
+```{r}
+summary(mod)
+```
+*Result Interpretation:*
+
+* Intercept ($P=9.73\times10^{-7}<\alpha=0.05$): with `Sepal.Length` and `Sepal.Width` being zero, it is predicted that `Petal.Width` of species *Setosa* is -0.86897 (not meaningful in real life context though).
+* `Sepal.Length` ($P=0.06>\alpha=0.05$): no significant relationship between `Sepal.Length` and `Petal.Width`.
+* `Sepal.Width` ($P=1.29\times10^{-5}<\alpha=0.05$): every one unit increase in `Sepal.Width` is associated with 0.23 unit increase in `Petal.Width`.
+* `Speciesversicolor` ($P=2\times10^{-16}<\alpha=0.05$): on average, species *Versicolor* has 1.17 unit more in `Petal.Width` than species *Setosa*, controlling for `Sepal.Length` and `Sepal.Width`.
+* `Speciesvirginica` ($P=2\times10^{-16}<\alpha=0.05$): on average, species *Virginica* has 1.78 unit more in `Petal.Width` than species *Setosa*, controlling for `Sepal.Length` and `Sepal.Width`.
+
