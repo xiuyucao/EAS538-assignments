@@ -1,0 +1,91 @@
+---
+title: 'Lab 9: Fixed vs random effects'
+embed-resources: true
+author: "Xiuyu Cao"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+format:
+  html:
+    code-folding: show
+    highlight: textmate
+    number-sections: true
+    theme: flatly
+    toc: TRUE
+    toc-depth: 4
+    toc-float:
+      collapsed: false
+      smooth-scroll: true
+---
+
+## Lab Setup
+Set your working directory and load libraries.
+```{r}
+library(nlme)  # for running mixed models
+```
+
+# Exercise 1
+## Question 1.1
+**Answer:** In a previous research project I have worked on, I was thinking about modeling microclimate (fine-resolution temperature) using macroclimate (coarser-resolution temperature) and land cover type (`micro_temp ~ macro_temp + land_cover`). However, there may be potential omitted variables introducing bias to my model. For example, the distance to the center of urban area may influence both the independent variable `macro_temp` and dependent variable `micro_temp`, since the Urban Heat Island effect would cause the averaged large scale temperature `macro_temp` to raise, as well as the small scale `micro_temp`.
+
+
+# Exercise 2
+```{r}
+irrdata <- read.csv('../data/lab9/irrdata.csv')
+head(irrdata, 3)
+```
+
+* `irrigation`: the number of times a farmer irrigated his/her crop throughout the growing season
+* `yield`: the yield of the wheat crop (in kg/ha)
+* `state`: the State the farmer lives in
+
+## Question 2.1
+```{r}
+lmod3 = lm(yield ~ irrigation, data = irrdata)
+summary(lmod3)
+
+# state farmer live in --> the wealth of the farmer
+table(irrdata$state)
+
+lmod4 = lm(yield ~ irrigation + state, data = irrdata)
+summary(lmod4)
+```
+**Answer:**
+
+* *Differences:* 
+  * The beta coefficients are not the the same
+  * Second model's F-statistic decreases due to the reduced dof
+* *Similarities:*
+  * What is significant: In both models, the intercept and slope for `irrigation` are significant
+  * $R^2$ being similar
+  * Residual standard error being similar
+
+
+## Question 2.2
+**Answer:** The beta coefficient on `irrigation` decreased a bit when including `state` in the model because `state` explains some degrees of the yield, due to the difference in wealth of farmers from different states. And since the farmers in Punjab are much richer than those from Bihar, `statePunjab` has a positive intercept difference, though not significant.
+
+
+# Exercise 3
+```{r}
+lakedf <- read.csv('../data/lab9/lakedf.csv')
+head(lakedf, 3)
+```
+* `lake`: the number ID of the lake where the sample was taken
+* `diversity`: the number of different algae species
+* `prod`: the productivity of the algae (in kg/m)
+* `temp`: mean temperature for 2017 (in Celsius)
+* `rainfall`: total rainfall in 2017 (in mm)
+* `sun`: the amount of sunlight measured as insolation (in W/m2)
+
+## Question 3.1
+```{r}
+lmod5 = lm(prod ~ diversity + temp + rain + sun, data = lakedf)
+summary(lmod5)
+
+# add random effect
+mod = lme(prod ~ diversity + temp + rain + sun, random = ~1|lake, data = lakedf)
+summary(mod)
+```
+**Answer:** The beta coefficient of the continuous variables are similar, as well as the p values of the continuous variables. While for the intercept, although the p values of the two models are similar, the beta coefficient of the intercept is different, due to the second model's intercept being added a random effect.
+
+## Question 3.2
+**Answer:** In a previous course project, I was trying to predict urbanization using variables including the distance to parks, forests, roads, water, and the elevation. I was trying to get a generalized model that can predict urbanization across the US, instead of the only a few states whose data I have access to. Also, in this case I believe I have collected enough data of factors and I don't think there is a problem of OVB. Therefore, in this case a random effect on the states would be more appropriate than a fixed effect.
+
