@@ -52,7 +52,7 @@ summary(lmod4)
 
 * *Differences:* 
   * The beta coefficients are not the the same
-  * Second model's F-statistic decreases due to the reduced dof
+  * Second model's F-statistic decreases
 * *Similarities:*
   * What is significant: In both models, the intercept and slope for `irrigation` are significant
   * $R^2$ being similar
@@ -87,5 +87,5 @@ summary(mod)
 **Answer:** The beta coefficient of the continuous variables are similar, as well as the p values of the continuous variables. While for the intercept, although the p values of the two models are similar, the beta coefficient of the intercept is different, due to the second model's intercept being added a random effect.
 
 ## Question 3.2
-**Answer:** In a previous course project, I was trying to predict urbanization using variables including the distance to parks, forests, roads, water, and the elevation. I was trying to get a generalized model that can predict urbanization across the US, instead of the only a few states whose data I have access to. Also, in this case I believe I have collected enough data of factors and I don't think there is a problem of OVB. Therefore, in this case a random effect on the states would be more appropriate than a fixed effect.
+**Answer:** In a previous course project, I was trying to model income of a place using variables including the distance to parks, forests, and water, density of roads, elevation, and population. I was trying to get a generalized model that can get income across the US, instead of only the few states whose data I have access to. Also, in this case I believe I have collected enough factors and I don't think there is a problem of OVB. Therefore, in this case a random effect on the states would be more appropriate than a fixed effect.
 
