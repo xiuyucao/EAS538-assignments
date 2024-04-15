@@ -1,0 +1,337 @@
+---
+title: "Problem Set 2"
+embed-resources: true
+author: "Xiuyu Cao"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+format:
+  html:
+    code-folding: show
+    highlight: textmate
+    number-sections: true
+    theme: flatly
+    toc: TRUE
+    toc-depth: 4
+    toc-float:
+      collapsed: false
+      smooth-scroll: true
+---
+
+```{r message=F}
+library(tidyverse)
+library(car)
+```
+
+# Question 1 
+```{r}
+data1 <- read.csv('../data/problemset2/data_q1.csv')
+```
+## A
+* $H_0:$ There is **no** difference in student's heart rate when opening up R studio before and after taking EAS 538.
+* $H_A:$ There **is** a difference in student's heart rate when opening up R studio before and after taking EAS 538.
+ 
+## B
+```{r}
+boxplot(rate~when, data=data1,
+        xlab='Group', ylab='Beats',
+        main='Beats Heart Rate Increases After Opening up R')
+```
+From the box plot, the mean of group "after" seems higher than the group "before".
+
+## C
+According to the information, I will be using paired t-test.
+
+For checking the t-test assumptions, first convert the data to one-sample, calculating differences of each pair `data1.diff`.
+```{r}
+data1.wide <- data1 %>%
+  pivot_wider(names_from=when, values_from=rate) %>%
+  mutate(diff=after-before)
+head(data1.wide)
+```
+Then check one-sample t-test assumptions
+```{r}
+## Normality
+dim(data1.wide)
+shapiro.test(data1.wide$diff)
+```
+* Continuous response data - Met
+* Sample is randomly selected from the population - Assume so
+* Observations are independent - Assume so
+* Values are nearly normal or the sample size is large enough (CLT) - $P=0.2<\alpha=0.05$, fail to reject Shapiro-Wilk normality test $H_0:$ *data are normally distributed*. Therefore, the data is normally distributed and the assumption is met.
+ 
+## D
+```{r}
+t.test(data1.wide$after, data1.wide$before, paired=T)
+```
+**Result Interpretation:** From the result of the paired t-test, $P=8.5\times10^{-5}<\alpha=0.05$. We thus reject $H_0$, and we can say that there is a significant difference in student's heart rate when opening up R studio before and after taking EAS 538. The mean beats increased of the after group is significantly higher than the before one.
+
+
+# Question 2 
+```{r}
+data2 <- read.csv('../data/problemset2/data_q2.csv') %>%
+  mutate(type=as.factor(type)) %>%
+  mutate(paid=as.factor(paid))
+head(data2, 3)
+```
+
+## A
+According to the information, I will be running a linear regression model.
+
+First check multicollinearity.
+```{r}
+cor(data2[,3:5])
+vif(lm(share~type+paid+users+comment+like, data=data2))
+```
+Looks good, none of the continuous variables has a correlation coefficient with `share` larger than .7, or VIF>5. I am using all of them to fit the linear regression model.
+
+## B
+* $H_0:$ There is no significant relationship between share number and all the other factors.
+* $H_A:$ There is significant relationship between share number one or more of the factors.
+
+## C
+I am using linear regression.
+
+Check the assumptions.
+
+First check the distribution of the dependent variable to get an idea of how the residuals will be like.
+```{r}
+hist(data2$share)
+```
+Looks not good. I would do a log transform.
+```{r}
+data2.t <- data2 %>%
+  mutate(share.log=log(share))
+hist(data2.t$share.log)
+```
+Looks good now. Then check linear regression assumptions.
+```{r}
+# get linear model
+lmod <- lm(share.log~users+comment+like+type+paid, data=data2.t)
+
+## linear relationship
+par(mfrow=c(1,3))
+plot(share.log~users, data=data2.t)
+plot(share.log~comment, data=data2.t)
+plot(share.log~like, data=data2.t)
+
+## homoscedasticity
+ncvTest(lmod)
+
+## residual normality
+shapiro.test(residuals(lmod))
+```
+**Linear Regression Assumptions:**
+
+* There is a linear relationship between the variables - From the plots, met.
+* Statistical independence of the errors - Assume so.
+* Homoscedasticity - $P=0.0003<\alpha=0.05$, reject ncvTest $H_0:$ *constant variance.* Therefore, the assumption of homoscedasticity is not met.
+* Residual normality - $P=0.001<\alpha=0.05$, reject Shapiro test $H_0:$ *Normally distributed.* Therefore, the assumption of residual normality is not met.
+
+## D
+```{r}
+summary(lmod)
+```
+**Result Interpretation: (at $\alpha=0.05$)**
+
+* `Intercept`($P<\alpha$): With `users`, `comment`, `like` being zero and `paid` being unpaid, it is predicted that there will be 2.44 log shares on average if the content is a link.
+* `users`, `comment`($P>\alpha$): There is no significant linear relationship between `users`/`comment` and log share.
+* `like`($P<\alpha$): Every one like increased is associated with an increase of $1.7\times10^{-3}$ log shares.
+* `typePhoto`($P>\alpha$): No significant difference in log shares between photo and link contents when unpaid, controlling for `users`, `comment`, and `like`.
+* `typeStatus`($P<\alpha$): On average, status contents have 0.4 more log shares than link contents when unpaid, controlling for `users`, `comment`, and `like`.
+* `typeVideo`($P<\alpha$): On average, video contents have 0.7 more log shares than link contents when unpaid, controlling for `users`, `comment`, and `like`.
+* `paid1`($P>\alpha$): No significant difference in log shares between paid and unpaid link contents, controlling for `users`, `comment`, and `like`.
+
+## E
+The adjusted R-squared is 0.43, which means the independent variables in the model explains 43% of the variation in the log share. We also have the P-value of F-statistic $2.2\times10^{-16}<\alpha=0.05$, we can reject $H_0:$ *no significant relationship*. Therefore, I would say this is a good fit.
+
+# Question 3 
+```{r}
+data3 <- read.csv('../data/problemset2/data_q3.csv') %>%
+  mutate(Type=as.factor(Type))
+head(data3, 3)
+```
+## A
+* $H_0:$ There is no difference in the number of calories among the three types of hot dog.
+* $H_1:$ At least one of the types of hot dog differ in calories from others.
+
+## B
+```{r}
+boxplot(Calories~Type, data=data3,
+        main='Calories of Different Types of Hotdog')
+```
+From the box plot, poultry hotdog seems differs in calories from the other two.
+
+## C
+I will be using ANOVA
+
+Check ANOVA assumptions
+```{r}
+# Equal Variance
+leveneTest(Calories~Type, data3, center=mean)
+
+# Normality
+beef <- filter(data3, Type=='beef')
+deer <- filter(data3, Type=='deer')
+poultry <- filter(data3, Type=='poultry')
+
+dim(beef)
+dim(deer)
+dim(poultry)
+
+shapiro.test(beef$Calories)
+shapiro.test(deer$Calories)
+shapiro.test(poultry$Calories)
+```
+**Conclusion:**
+
+* Continuous response data - Met
+* Samples must be independent - Assume so
+* Each population must have the same variance - from the output of the `leveneTest()`, $P=0.4>\alpha=0.05$. We thus fail to rejct $H_0:$ *Equal variance.* Therefore, the assumption is met.
+* The populations of interest must be normally distributed - From the outputs of the `shapiro.test()` of each type, all of the p values $>\alpha=0.05$. We thus fail to reject $H_0:$ *The input scores are normally distributed*. Therefore, the AVOVA’s normality assumption is met.
+
+## D
+```{r}
+aov <- aov(Calories~Type, data=data3)
+summary(aov)
+
+# Post hoc test
+TukeyHSD(aov)
+```
+**Result Interpretation:**
+
+* From the output of `aov()`, the p value is $2\times10^{-16}<\alpha=0.05.$ We thus reject $H_0$, we can say that at least one of the types has different mean calories comparing to the others.
+* From the output of `dim()`, the three groups are of the same size, we can then do the Tukey's HSD test. From the output of `TukeyHSD()`, calories of poultry is significantly smaller than that of beef ($P=0<\alpha=0.05$), calories poultry is significantly smaller than that of deer ($P=0<\alpha=0.05$).
+
+
+# Question 4 
+```{r}
+data4 <- read.csv('../data/problemset2/data_q4.csv') %>%
+  mutate(cactus.type=as.factor(cactus.type))
+head(data4, 3)
+```
+
+## A
+I will be using linear regression, `sucrose` ~ `weight` + `days.old` + `cactus.type`
+
+## B
+Check multicollinearity
+```{r}
+cor(data4[,2:3])
+vif(lm(sucrose ~ weight + days.old + cactus.type, data=data4))
+```
+Similar to quesiont 2, nothing to worry about.
+
+Then check linear regression assumptions. First check the distribution of the dependent variable.
+```{r}
+hist(data4$sucrose)
+```
+Looks not good. Log it.
+```{r}
+data4 <- data4 %>%
+  mutate(sucrose.log=log(sucrose))
+hist(data4$sucrose.log)
+```
+Looks good. Fit the model and check assumptions.
+```{r}
+lmod <- lm(sucrose.log~weight+days.old+cactus.type, data=data4)
+
+## Linear relationship
+par(mfrow=c(1,2))
+plot(sucrose.log~weight, data=data4)
+plot(sucrose.log~days.old, data=data4)
+
+## homoscedasticity
+ncvTest(lmod)
+
+## residual normality
+shapiro.test(residuals(lmod))
+```
+**Linear Regression Assumptions:**
+
+* There is a linear relationship between the variables - From the plots, met.
+* Statistical independence of the errors - Assume so.
+* Homoscedasticity - $P=0.92>\alpha=0,05$, fail to reject ncvTest $H_0:$ *constant variance.* Therefore, the assumption of homoscedasticity is met.
+* Residual normality - $P=0.34>\alpha=0.05$, fail to reject Shapiro test $H_0:$ *Normally distributed.* Therefore, the assumption of residual normality is met.
+
+## C
+```{r}
+summary(lmod)
+```
+**Result Interpretation: (at $\alpha=0.05$)**
+
+* `Intercept`($P<\alpha$): With `weight` and `days.old` being zero, it is predicted that there will be 1.8 log percent sucrose on average of type Blanco.
+* `weight`($P<\alpha$): Every one gram increased in weight is associated with an increase of 0.005 log percent sucrose.
+* `days.old`: There is no significant linear relationship between `days.old` and log percent sucrose.
+* `cactus.typeMamey`($P<\alpha$): On average, Mamey cactus have 0.2 less log percent sucrose than Blanco, controlling for `weight` and `days.old`.
+* `cactus.typeTenamaxtle`($P<\alpha$): On average, Tenamaxtle cactus have 0.26 less log percent sucrose than Blanco, controlling for `weight` and `days.old`.
+* `cactus.typeWild`($P>\alpha$): No significant difference in log percent sucrose between typeWild and Blanco, controlling for `weight` and `days.old`.
+
+## D
+```{r}
+lmod2 <- lm(sucrose.log~weight+cactus.type*days.old, data=data4)
+summary(lmod2)
+```
+**How the relationships between log sucrose and days.old differ across varieties ($\alpha=0.05$)**
+* `Intercept`($P>\alpha$): Type Blanco, all other continuous variables being zero, log sucrose not significantly different from zero.
+* `cactus.typeMamey:days.old`($P<\alpha$): For every 1 day old increases, Mamey has 0.0637-0.0638 log percent sucrose increase, controlling for other continuous vairables.
+* `cactus.typeTenamaxtle:days.old`($P<\alpha$): For every 1 day old increases, Tenamaxtle has 0.0637-0.11 log percent sucrose increase, controlling for other continuous vairables.
+* `cactus.typeWild:days.old`($P>\alpha$): For every 1 day old increases, Wild is not significantly different from the Blanco, in change of log percent sucrose.
+
+
+## E 
+```{r}
+# visualize
+range(data4$days.old)
+range(data4$sucrose.log)
+
+plot(1:1000, rep(-100, 1000), ylim = c(1, 5), xlim = c(20, 70), xlab = 'age', ylab = 'log percent sucrose')
+abline(a = -1.3501814, b = 0.0637145, col = 'blue') # Blanco
+abline(a = -1.3501814 + 3.1640960, b = 0.0637145 -0.0638379, col = 'red') # Mamey
+abline(a = -1.3501814 + 5.8437690 , b = 0.0637145 -0.1135201, col = 'orange') # Tenamaxtle
+abline(a = -1.3501814 - 2.0786402, b = 0.0637145 + 0.0367754, col = 'green') # Wild
+legend("topright", legend=c("Blanco", "Mamey", "Tenamaxtle", "Wild"),
+       col=c("blue", "red", "orange", "green"), lty=1)
+```
+
+# Extra Credits
+```{r}
+library(nlme)
+## get data
+library(FIESTA)  # Forest Inventory data
+tree <- WYtree %>%  # Trees in WY
+  filter(STATUSCD==1) %>%  # living tree
+  filter(SPGRPCD>=1, SPGRPCD<=24) %>%  # softwood species groups
+  filter(SPCD==101 | SPCD==113 | SPCD==202) %>%  # softwood species code 101, 113, and 202
+  select(SPCD, DIA, HT) %>%  # species code, diameter (inches), and height (feet)
+  mutate(SPCD=as.factor(SPCD))
+
+
+hist(tree$HT)
+tree <- tree %>%
+  mutate(HT.sqrt=sqrt(HT))
+hist(tree$HT.sqrt)
+
+lmod <- lme(HT.sqrt ~ DIA, random = ~1|SPCD, data=tree)
+## assumptions
+# linear relationship -met
+plot(HT~DIA, data=tree)
+# homoscedasticity - not met
+plot(residuals(lmod)~fitted(lmod), data=tree)
+# normality - met
+qqPlot(residuals(lmod))
+# statistical independence of errors - Assume so
+
+summary(lmod)
+```
+
+**Result interpretation:**
+* Random Effects: intercept is modeled as varying randomly across different softwood species. The height variation among the different species is 0.63 feet, controlling for diameter.
+* Fixed effects: 
+  * Intercept($P<\alpha=0.05$): When diameter is 0, baseline species (101) square root tree height is 3.77 sqrt(feet).
+  * Slope ($P<\alpha=0.05$): Each inch increase in diameter, square root tree height will increase by 0.23 sqrt(feet).
+
+
+
+
+
+
+
