@@ -324,6 +324,7 @@ summary(lmod)
 ```
 
 **Result interpretation:**
+
 * Random Effects: intercept is modeled as varying randomly across different softwood species. The height variation among the different species is 0.63 feet, controlling for diameter.
 * Fixed effects: 
   * Intercept($P<\alpha=0.05$): When diameter is 0, baseline species (101) square root tree height is 3.77 sqrt(feet).
