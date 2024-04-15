@@ -258,7 +258,7 @@ summary(lmod)
 ```
 **Result Interpretation: (at $\alpha=0.05$)**
 
-* `Intercept`($P<\alpha$): With `weight` and `days.old` being zero, it is predicted that there will be 1.8 log percent sucrose on average of type Blanco.
+* `Intercept`($P<\alpha$): With `weight` and `days.old` being zero, it is predicted that there will be 1.8 log percent sucrose on average in type Blanco.
 * `weight`($P<\alpha$): Every one gram increased in weight is associated with an increase of 0.005 log percent sucrose.
 * `days.old`: There is no significant linear relationship between `days.old` and log percent sucrose.
 * `cactus.typeMamey`($P<\alpha$): On average, Mamey cactus have 0.2 less log percent sucrose than Blanco, controlling for `weight` and `days.old`.
@@ -271,10 +271,11 @@ lmod2 <- lm(sucrose.log~weight+cactus.type*days.old, data=data4)
 summary(lmod2)
 ```
 **How the relationships between log sucrose and days.old differ across varieties ($\alpha=0.05$)**
+
 * `Intercept`($P>\alpha$): Type Blanco, all other continuous variables being zero, log sucrose not significantly different from zero.
-* `cactus.typeMamey:days.old`($P<\alpha$): For every 1 day old increases, Mamey has 0.0637-0.0638 log percent sucrose increase, controlling for other continuous vairables.
-* `cactus.typeTenamaxtle:days.old`($P<\alpha$): For every 1 day old increases, Tenamaxtle has 0.0637-0.11 log percent sucrose increase, controlling for other continuous vairables.
-* `cactus.typeWild:days.old`($P>\alpha$): For every 1 day old increases, Wild is not significantly different from the Blanco, in change of log percent sucrose.
+* `cactus.typeMamey:days.old`($P<\alpha$): For every 1 day old increases, Mamey has 0.0637-0.0638 log percent sucrose increase, controlling for `weight`.
+* `cactus.typeTenamaxtle:days.old`($P<\alpha$): For every 1 day old increases, Tenamaxtle has 0.0637-0.11 log percent sucrose increase, controlling for `weight`.
+* `cactus.typeWild:days.old`($P>\alpha$): For every 1 day old increases, Wild is not significantly different from the Blanco in change of log percent sucrose, contorlling for `weight`.
 
 
 ## E 
@@ -283,7 +284,7 @@ summary(lmod2)
 range(data4$days.old)
 range(data4$sucrose.log)
 
-plot(1:1000, rep(-100, 1000), ylim = c(1, 5), xlim = c(20, 70), xlab = 'age', ylab = 'log percent sucrose')
+plot(1:1000, rep(-100, 1000), ylim = c(1, 5), xlim = c(20, 70), xlab = 'Age (Days)', ylab = 'Log Percent Sucrose')
 abline(a = -1.3501814, b = 0.0637145, col = 'blue') # Blanco
 abline(a = -1.3501814 + 3.1640960, b = 0.0637145 -0.0638379, col = 'red') # Mamey
 abline(a = -1.3501814 + 5.8437690 , b = 0.0637145 -0.1135201, col = 'orange') # Tenamaxtle
