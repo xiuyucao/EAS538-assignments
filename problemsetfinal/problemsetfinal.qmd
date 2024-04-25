@@ -1,0 +1,298 @@
+---
+title: "Fnial Problem Set"
+embed-resources: true
+author: "Xiuyu Cao"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+format:
+  html:
+    code-folding: show
+    highlight: textmate
+    number-sections: true
+    theme: flatly
+    toc: TRUE
+    toc-depth: 4
+    toc-float:
+      collapsed: false
+      smooth-scroll: true
+---
+
+- [x] I attest that I worked on this problem set individually 
+- [x] I attest that I only spoke to Kai or Yi or Shike about this exam
+
+## Lab Setup
+Set your working directory and load libraries.
+```{r message=F}
+library(dplyr)
+library(car)
+```
+
+# Question 1 
+```{r}
+data1 <- read.csv('../data/problemsetfinal/data_q1.csv') %>%
+  mutate(drink=as.factor(drink))
+head(data1, 3)
+```
+
+
+## a 
+> Please write the null and alternate hypothesis (1 point).
+
+* $H_0:$ There is NO difference between the mean quiz scores (`socres`) based on the type of beverage consumed prior to the exam (`drink`).
+* $H_A:$ There IS a difference between the mean quiz scores (`socres`) based on the type of beverage consumed prior to the exam (`drink`).
+
+
+## b 
+> Please create a visual plot or table to answer this question (1 point).
+
+```{r}
+boxplot(scores~drink, data=data1, 
+        main='Quiz Scores of Students Drink/Not Drink Coffee Before the Exam',
+        xlab='Drink or Not', ylab='Scores')
+```
+From the plot there seems a difference between the mean scores of the two groups of students. Students drinking coffee preexam seem to have a higher mean score.
+
+
+## c 
+> Please decide what statistical test to use and check whether your data meet the assumptions to run this test (2 points).
+
+2 groups, continuous y and categorical x --> Two sample two tailed t-test.
+
+Check t-test assumptions
+```{r}
+# get 2 groups
+wiz_c <- filter(data1, drink=='coffee')
+wo_c <- filter(data1, drink=='nocoffee')
+
+## check equal variance
+var(wiz_c$scores)
+var(wo_c$scores)
+var.test(wiz_c$scores, wo_c$scores)
+
+## check normality
+dim(wiz_c)
+dim(wo_c)
+shapiro.test(wiz_c$scores)
+shapiro.test(wo_c$scores)
+```
+**T-test Assumptions**
+
+* Continuous response data - Met.
+* Sample is randomly selected from the population - Assume so.
+* Observations are independent - Assume so.
+* Equal variance between 2 groups - From the output of `var.test()`, $P=0.69>\alpha=0.05$. We thus fail to reject $H_0: Equal variance.$ Therefore, the assumption is met.
+* Values are nearly normal or the sample size is large enough - From the outputs of the two Shapiro-Wilk tests, the P values are both greater than $\alpha=0.05$. We thus fail to reject $H_0: Normality.$ of both groups. Therefore, the assumption of normal distribution is met.
+
+
+## d 
+> Please run the statistical test and interpret the result (1 point). Which group(s) are significantly different from one another (if any)? How are they different?
+
+```{r}
+t.test(wiz_c$scores, wo_c$scores, var.equal=T)
+```
+**Result Interpretation:** 
+
+From the result of the T-test, $P=1\times10^{-6}<\alpha=0.05$. We thus reject $H_0$, and we can say that There is a significant difference between the mean quiz scores based on the type of beverage consumed prior to the exam. The mean score of the students drinking coffee (97.4) is higher than that of no coffee (83.9).
+
+
+# Question 2 
+```{r}
+data2 <- read.csv('../data/problemsetfinal/data_q2.csv') %>%
+  mutate(drink=as.factor(drink))
+head(data2, 3)
+table(data2$drink)
+```
+
+
+## a 
+> Please write the null and alternate hypothesis (1 point).
+
+* $H_0:$ There is no difference in the quiz scores of the 3 student groups.
+* $H_A:$ At least one of the 3 student groups has different mean scores comparing to the others.
+
+
+## b 
+> Please create a visual plot or table to answer this question (1 point).
+
+```{r}
+boxplot(scores~drink, data=data2,
+        xlab='Drink', ylab='Scores', main='Quize Scores of Students Drinking Different Drinks')
+```
+From the plot, the mean score of the no-coffee group seems a bit lower than others.
+
+
+## c 
+> Please decide what statistical test to use and check whether your data meet the assumptions to run this test (2 points).
+
+3 groups, continuous y and categorical x --> use ANOVA.
+
+Check ANOVA assumptions
+```{r}
+# get each group
+drink1 <- filter(data2, drink=='coffee')
+drink2 <- filter(data2, drink=='nocoffee')
+drink3 <- filter(data2, drink=='tea')
+
+## check group size
+dim(drink1)
+dim(drink2)
+dim(drink3)
+
+## check equal variance
+leveneTest(scores~drink, data2, center=mean)
+
+## check normality
+shapiro.test(drink1$scores)
+shapiro.test(drink2$scores)
+shapiro.test(drink3$scores)
+```
+**ANOVA Assumptions**
+
+* Continuous response data - Met.
+* Samples must be independent - Assume so.
+* Each population must have the same variance - From the output of the `leveneTest()`, $P=0.73>\alpha=0.05$. We thus fail to reject $H_0: Equal variance.$ Therefore, the assumption is met.
+* The population of interest must be normally distributed - From the outputs of the Shapiro-Wilk tests, the P values are all greater than $\alpha=0.05.$ We thus fail to reject $H_0: Normally distributed.$ Therefore, the assumption is met.
+
+
+## d 
+> Please run the statistical test and interpret the result (1 point). Which group(s) are significantly different from one another (if any)? How are they different?
+
+```{r}
+# ANOVA test
+aov <- aov(scores~drink, data=data2)
+summary(aov)
+
+# Tukey-Kramer test
+TukeyHSD(aov)
+```
+**Result Interpretation:**
+
+* From the output of `aov()`, $P=1.1\times10^{-5}<\alpha=0.05.$ We thus reject $H_0$, we can say that at least one of the 3 student groups has different mean scores comparing to the others
+* From the out put of `dim()`, these groups are of different sizes, therefore we use Tukey Kramer to do the post-hoc test. From the output, the mean socre of the `nocoffee` group is significantly lower than that of the `coffee` group ($P=5.4\times10^{-7}<\alpha=0.05$), the mean score of the `tea` group is significantly lower than that of the `nocoffee` group ($P=0.005<\alpha=0.05$).
+
+
+# Question 3 
+```{r}
+data3 <- read.csv('../data/problemsetfinal/data_q3.csv') %>%
+  mutate(studytype=as.factor(studytype)) %>%
+  mutate(grade=as.factor(grade))
+head(data3, 3)
+```
+
+
+## a 
+> Please write the null and alternate hypothesis (1 point).
+
+* $H_0:$ The final grades are independent of the primary material students used to study.
+* $H_A:$ The final grades are significantly different based on the primary material students used to study.
+
+
+## b 
+> Please create a visual plot or table to answer this question (1 point).
+
+```{r}
+table.data3 <- table(data3$studytype, data3$grade)
+table.data3
+```
+From the table, students using textbook as their primary study material seem to have lower grades.
+
+
+## c 
+> Please decide what statistical test to use and check whether your data meet the assumptions to run this test (2 points).
+
+Categorical y and x --> Chi-square.
+
+**Chi-square Assumptions:**
+
+* Data in cells are counts/frequencies - Met.
+* Categories are mutually exclusive - Met.
+* Samples must be independednt - Assume so.
+* All cells must be filled, more than 5 obs - Met.
+
+
+## d 
+> Please run the statistical test and interpret the result (1 point). Which group(s) are significantly different from one another (if any)? How are they different?
+
+```{r}
+chisq.test(table.data3)
+```
+**Result Interpretation**: According to the Chi-square test result, $P=0.001<\alpha=0.05$, we therefore reject $H_0$. We can say that the final grades are significantly different based on the primary material students used to study, with students choosing to use textbooks more likely to have Cs and Bs and less likely to have As, and students choosing to use lectures more likely to have grades above B.
+
+
+# Question 4 
+```{r}
+data4 <- read.csv('../data/problemsetfinal/data_q4.csv') %>%
+  mutate(drink=as.factor(drink))
+head(data4, 3)
+```
+
+
+## a
+> Please decide which statistical test to use and please identify which model you are going to run (1 point).
+
+I have multiple continuous independent variables, a categorical independent variable, and a continuous response variable. Therefore, I will be using ANCOVA in the linear regression framework.
+
+Check multicollinearity.
+```{r}
+lm.full <- lm(scores~drink+textbook+sleep, data=data4)
+vif(lm.full)
+```
+According to the output, the VIF of the variables are all about 1, indicating a low correlation among them. Therefore, I don't need to worry about the multicollinearity and will be using the full model.
+
+
+## b 
+> Please write the null and alternate hypotheses (1 point).
+
+* $H_0:$ There is no significant relationship between quiz 1 scores and all the factors.
+* $H_A:$ There is significant relationship between quiz 1 scores and one or more of the factors.
+
+
+## c
+> Please check whether your data meet the assumptions to run this test (1 point).
+
+```{r}
+# check the distribution of the response variable
+hist(data4$scores)
+
+# check linear relationship
+par(mfrow=c(1, 2))
+plot(scores~textbook, data=data4)
+plot(scores~sleep, data=data4)
+
+# check homoscedasticity
+ncvTest(lm.full)
+
+# check residual normality
+shapiro.test(residuals(lm.full))
+```
+**Linear Regression Assumptions:**
+
+* There is a linear relationship between the variables - From the plots, met.
+* Statistical independence of the errors - Assume so.
+* Homoscedasticity - $P=0.95>\alpha=0.05$. We thus fail to reject $H_0: Homoscedasticity$. Therefore, the assumption is met.
+* Residual normality - $P=0.72>\alpha=0.05$. We thus fail to reject $H_0: Residual normality$. Therefore, the assumption is met.
+
+
+## d 
+>Please run the statistical test and interpret the result. Which variables are significantly associated with quiz scores? Please write out one sentence for each significant beta coefficient explaining what it means in non-technical terms (2 points).
+
+```{r}
+summary(lm.full)
+```
+**Result Interpretation**
+
+* Significant Coefficients ($P<\alpha=0.05$):
+  * `Intercept`: With hours reading textbook and sleeping before the quiz being zero, it is predicted that students drink coffee before the quiz have an average score of 29.3.
+  * `drinknocoffee`: On average, students drink no coffee before the quiz get 4.4 less scores than those drinking coffee, controlling for other continuous variables.
+  * `textbook`: Every one hour spent on reading textbook is associated with an increase of 1.9 in the score.
+  * `sleep`: Every one hour spent on sleeping before the quiz is associated with an increase of 4.1 in the score.
+* Non-significant Coefficient ($P>\alpha=0.05$):
+  * `drinktea`: There is no significant difference in quiz score between students who drink tea and who drink coffee, controlling for other continuous variables.
+
+
+## e 
+> Discuss the fit of your model and whether you think it is a good or bad fit. Why (1 point)?
+
+The adjusted $R^2$ is 0.67, which means the independent variables in the model explain 67% of the variation in the score. We also have a P-value of the F-statistic $2.2\times10^{-16}<\alpha=0.05$, which means there is a significant relationship. Therefore, I would say this is a good fit.
+
+
+
