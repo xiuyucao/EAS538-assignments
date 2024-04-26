@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Xiuyu Cao">
-<meta name="dcterms.date" content="2024-04-25">
+<meta name="dcterms.date" content="2024-04-26">
 
 <title>Fnial Problem Set</title>
 <style>
@@ -3191,7 +3191,7 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 25, 2024</p>
+      <p class="date">April 26, 2024</p>
     </div>
   </div>
   
@@ -3317,8 +3317,8 @@ W = 0.97071, p-value = 0.2472</code></pre>
 <li>Continuous response data - Met.</li>
 <li>Sample is randomly selected from the population - Assume so.</li>
 <li>Observations are independent - Assume so.</li>
-<li>Equal variance between 2 groups - From the output of <code>var.test()</code>, <span class="math inline">\(P=0.69&gt;\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0: Equal variance.\)</span> Therefore, the assumption is met.</li>
-<li>Values are nearly normal or the sample size is large enough - From the outputs of the two Shapiro-Wilk tests, the P values are both greater than <span class="math inline">\(\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0: Normality.\)</span> of both groups. Therefore, the assumption of normal distribution is met.</li>
+<li>Equal variance between 2 groups - From the output of <code>var.test()</code>, <span class="math inline">\(P=0.69&gt;\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0:\)</span> <em>Equal variance.</em> Therefore, the assumption is met.</li>
+<li>Values are nearly normal or the sample size is large enough - From the outputs of the two Shapiro-Wilk tests, the P values are both greater than <span class="math inline">\(\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0:\)</span> <em>Normality</em> of both groups. Therefore, the assumption of normal distribution is met.</li>
 </ul>
 </section>
 <section id="d" class="level2" data-number="1.4">
@@ -3453,8 +3453,8 @@ W = 0.99301, p-value = 0.813</code></pre>
 <ul>
 <li>Continuous response data - Met.</li>
 <li>Samples must be independent - Assume so.</li>
-<li>Each population must have the same variance - From the output of the <code>leveneTest()</code>, <span class="math inline">\(P=0.73&gt;\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0: Equal variance.\)</span> Therefore, the assumption is met.</li>
-<li>The population of interest must be normally distributed - From the outputs of the Shapiro-Wilk tests, the P values are all greater than <span class="math inline">\(\alpha=0.05.\)</span> We thus fail to reject <span class="math inline">\(H_0: Normally distributed.\)</span> Therefore, the assumption is met.</li>
+<li>Each population must have the same variance - From the output of the <code>leveneTest()</code>, <span class="math inline">\(P=0.73&gt;\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0:\)</span> <em>Equal variance.</em> Therefore, the assumption is met.</li>
+<li>The population of interest must be normally distributed - From the outputs of the Shapiro-Wilk tests, the P values are all greater than <span class="math inline">\(\alpha=0.05.\)</span> We thus fail to reject <span class="math inline">\(H_0:\)</span> <em>Normally distributed.</em> Therefore, the assumption is met.</li>
 </ul>
 </section>
 <section id="d-1" class="level2" data-number="2.4">
@@ -3650,8 +3650,8 @@ W = 0.99558, p-value = 0.7243</code></pre>
 <ul>
 <li>There is a linear relationship between the variables - From the plots, met.</li>
 <li>Statistical independence of the errors - Assume so.</li>
-<li>Homoscedasticity - <span class="math inline">\(P=0.95&gt;\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0: Homoscedasticity\)</span>. Therefore, the assumption is met.</li>
-<li>Residual normality - <span class="math inline">\(P=0.72&gt;\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0: Residual normality\)</span>. Therefore, the assumption is met.</li>
+<li>Homoscedasticity - <span class="math inline">\(P=0.95&gt;\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0:\)</span> <em>Homoscedasticity</em>. Therefore, the assumption is met.</li>
+<li>Residual normality - <span class="math inline">\(P=0.72&gt;\alpha=0.05\)</span>. We thus fail to reject <span class="math inline">\(H_0:\)</span> <em>Residual normality</em>. Therefore, the assumption is met.</li>
 </ul>
 </section>
 <section id="d-3" class="level2" data-number="4.4">

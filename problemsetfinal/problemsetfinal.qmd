@@ -79,8 +79,8 @@ shapiro.test(wo_c$scores)
 * Continuous response data - Met.
 * Sample is randomly selected from the population - Assume so.
 * Observations are independent - Assume so.
-* Equal variance between 2 groups - From the output of `var.test()`, $P=0.69>\alpha=0.05$. We thus fail to reject $H_0: Equal variance.$ Therefore, the assumption is met.
-* Values are nearly normal or the sample size is large enough - From the outputs of the two Shapiro-Wilk tests, the P values are both greater than $\alpha=0.05$. We thus fail to reject $H_0: Normality.$ of both groups. Therefore, the assumption of normal distribution is met.
+* Equal variance between 2 groups - From the output of `var.test()`, $P=0.69>\alpha=0.05$. We thus fail to reject $H_0:$ *Equal variance.* Therefore, the assumption is met.
+* Values are nearly normal or the sample size is large enough - From the outputs of the two Shapiro-Wilk tests, the P values are both greater than $\alpha=0.05$. We thus fail to reject $H_0:$ *Normality* of both groups. Therefore, the assumption of normal distribution is met.
 
 
 ## d 
@@ -149,8 +149,8 @@ shapiro.test(drink3$scores)
 
 * Continuous response data - Met.
 * Samples must be independent - Assume so.
-* Each population must have the same variance - From the output of the `leveneTest()`, $P=0.73>\alpha=0.05$. We thus fail to reject $H_0: Equal variance.$ Therefore, the assumption is met.
-* The population of interest must be normally distributed - From the outputs of the Shapiro-Wilk tests, the P values are all greater than $\alpha=0.05.$ We thus fail to reject $H_0: Normally distributed.$ Therefore, the assumption is met.
+* Each population must have the same variance - From the output of the `leveneTest()`, $P=0.73>\alpha=0.05$. We thus fail to reject $H_0:$ *Equal variance.* Therefore, the assumption is met.
+* The population of interest must be normally distributed - From the outputs of the Shapiro-Wilk tests, the P values are all greater than $\alpha=0.05.$ We thus fail to reject $H_0:$ *Normally distributed.* Therefore, the assumption is met.
 
 
 ## d 
@@ -268,8 +268,8 @@ shapiro.test(residuals(lm.full))
 
 * There is a linear relationship between the variables - From the plots, met.
 * Statistical independence of the errors - Assume so.
-* Homoscedasticity - $P=0.95>\alpha=0.05$. We thus fail to reject $H_0: Homoscedasticity$. Therefore, the assumption is met.
-* Residual normality - $P=0.72>\alpha=0.05$. We thus fail to reject $H_0: Residual normality$. Therefore, the assumption is met.
+* Homoscedasticity - $P=0.95>\alpha=0.05$. We thus fail to reject $H_0:$ *Homoscedasticity*. Therefore, the assumption is met.
+* Residual normality - $P=0.72>\alpha=0.05$. We thus fail to reject $H_0:$ *Residual normality*. Therefore, the assumption is met.
 
 
 ## d 
